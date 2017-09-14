@@ -1,0 +1,79 @@
+\documentclass[12pt]{book}
+
+% save paper
+\usepackage{fullpage}
+
+% organize by weeks
+\renewcommand{\chaptername}{Week}
+
+% clickable table of contents
+\usepackage[hidelinks, linktoc=all]{hyperref}
+
+% math
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+
+% nice lists
+\usepackage[shortlabels]{enumitem}
+
+%% environments
+
+% definition
+\newtheorem{definition}{Definition}[section]
+\newtheorem{defexample}{Example}[definition]
+
+% theorem
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{thmexample}{Example}[theorem]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}{Lemma}[theorem]
+
+% misc
+\newtheorem{claim}{Claim}[section]
+\newtheorem*{remark}{Remark}
+
+%% math commands
+
+% common sets (blackboard bold)
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+
+% generally useful stuff
+\newcommand{\paren}[1]{\left(#1\right)}
+\newcommand{\setof}[1]{\left\{#1\right\}}
+\newcommand{\textfn}[2]{\text{#1}\paren{#2}}
+\newcommand{\spanof}[1]{\text{span}\setof{#1}}
+
+% inner product
+\newcommand{\inp}[2]{\left\langle #1 , #2 \right\rangle}
+
+% complex conjugate
+\newcommand{\conj}[1]{\overline{#1}}
+
+% norm
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\abs}[1]{\left|#1\right|}
+
+% matrix stuff
+\newcommand{\transpose}[1]{{#1}^{\intercal}}
+\newcommand{\tr}[1]{\textfn{tr}{#1}}
+
+\begin{document}
+
+% keep page numbering of content stable
+\frontmatter
+
+\title{Math 245}
+\author{James Yu}
+\maketitle
+
+\tableofcontents
+
+% begin page numbering for content
+\mainmatter
+
+\include{01}
+
+\end{document}

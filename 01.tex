@@ -1,0 +1,211 @@
+\chapter{September 8 - September 13}
+
+\section{Inner Product}
+\begin{definition}[Inner Product Space]
+  An \emph{inner product space} (over $\C$) is a \emph{vector space} $V$ and a function:
+  $$\inp{\cdot}{\cdot} : V \times V \to \C$$
+  satisfying:
+  \begin{enumerate}[i.]
+    \item $\inp{\vec x + \vec y}{\vec z} = \inp{\vec x}{\vec z} + \inp{\vec y}{\vec z}$ for all $\vec x,\vec y,\vec z \in V$
+    \item $\inp{c\vec x}{\vec y} = c\inp{\vec x}{\vec y}$ for all $\vec x,\vec y \in V$ and $c \in \C$
+    \item $\inp{\vec x}{\vec y} = \conj{\inp{\vec y}{\vec x}}$ for all $\vec x, \vec y \in V$
+    \item $\inp{\vec x, \vec x} \in \R_{>0}$ if $\vec x \ne \vec 0$, $\inp{\vec x}{\vec x} = 0$ otherwise
+  \end{enumerate}
+\end{definition}
+
+\begin{defexample}[Standard Complex Inner Product]
+  \begin{align*}
+  V &= \C^n & \inp{(x_1,\ldots,x_n)}{(y_1,\ldots,y_n)} &= x_1\conj{y_1} + \ldots + x_n\conj{y_n}
+  \end{align*}
+
+  Properties \emph{i}, \emph{ii}, and \emph{iii} clearly hold.
+  For \emph{iv}, for any $\vec x = (a_1 + b_1i, \ldots, a_n + b_ni)$
+  \begin{align}
+    \inp{\vec x}{\vec x} &= (a_1 + b_1i)\conj{(a_1 + b_1i)} + \ldots + (a_n + b_ni)\conj{(a_n+b_ni)} \\
+                         &= a_1^2 + b_1^2 + \ldots + a_n^2 + b_n^2
+  \end{align}
+
+  This is the \emph{standard complex inner product}.
+  If we replace $\C^n$ with $\R^n$ then we get the \emph{standard real inner product} (dot product).
+\end{defexample}
+
+\begin{defexample}[$L^2$ Inner Product]
+  \begin{align*}
+    V &= C([0,1]) & \inp{f}{g} &= \int_0^1 f \conj g
+  \end{align*}
+  This is called the $L^2$ inner product on $V$
+\end{defexample}
+
+\begin{defexample}[Frobenius Inner Product]
+  \begin{align*}
+    V &= M_n(\C) & \inp{A}{B} &= \tr{A\conj{\transpose{B}}}
+  \end{align*}
+  This is called the \emph{Frobenius inner product} on $V$.
+  It satisfies \emph{iv} because, for $A = (a_{ij})$, $B = (b_{ij})$ we have:
+    $$\tr{A\conj{\transpose{B}}} = \sum a_{ij}\conj{b_ij}$$
+  which is equivalent to the \emph{standard complex inner product}.
+\end{defexample}
+
+\section{Cauchy-Bunyakovsky-Schwarz Inequality}
+\begin{definition}[Length]
+  If $\vec v$ is a vector in an \emph{inner product space}, the \emph{length} of $\vec v$ is:
+    $$\norm{\vec v} = \sqrt{\inp{\vec v}{\vec v}}$$
+\end{definition}
+
+\begin{theorem}[Cauchy-Schwarz]
+  Let $\vec x, \vec y \in V$ be vectors in an \emph{inner product space}, then:
+    $$\abs{\inp{\vec x}{\vec y}} \le \norm{\vec x}\norm{\vec y}$$
+\end{theorem}
+\begin{proof}
+  If $\vec y = \vec 0$, this is trivial. Otherwise, for any $c \in \C$
+  \begin{align}
+    0 & \le \norm{\vec x - c\vec y}^2 \\
+      & \le \norm{\vec x}^2 - \conj{c}\inp{\vec x}{\vec y} - c\inp{\vec y}{\vec x} + c\conj{c}\norm{y}^2
+  \end{align}
+  So, let $c = \dfrac{\inp{\vec x}{\vec y}}{\norm{y}^2}$:
+  \begin{align}
+    0 & \le \norm{\vec x}^2
+          - \frac{\conj{\inp{\vec x}{\vec y}}}{\norm{y}^2}\inp{\vec x}{\vec y}
+          - \frac{\inp{\vec x}{\vec y}}{\norm{y}^2}\inp{\vec y}{\vec x}
+          + \frac{\inp{\vec x}{\vec y}\conj{\inp{\vec x}{\vec y}}}{\norm{y}^4}\norm{y}^2 \\
+      & \le \norm{\vec x}^2
+          - \frac{\abs{\inp{\vec x}{\vec y}}^2}{\norm{y}^2}
+          - \frac{\abs{\inp{\vec x}{\vec y}}^2}{\norm{y}^2}
+          + \frac{\abs{\inp{\vec x}{\vec y}}^2}{\norm{y}^2} \\
+    \abs{\inp{\vec x}{\vec y}}^2 & \le \norm{\vec x}^2 \norm{\vec y}^2 \\
+    \abs{\inp{\vec x}{\vec y}}   & \le \norm{\vec x}   \norm{\vec y}
+  \end{align}
+\end{proof}
+
+\begin{remark}
+  We can define the angle between $\vec x, \vec y$ as
+  $\cos^{-1} \dfrac{\abs{\inp{\vec x}{\vec y}}}{\norm{\vec x}\norm{\vec y}}$.
+\end{remark}
+
+\section{Orthogonality}
+\begin{definition}[Orthogonality]
+  Two vectors $\vec x, \vec y$ are \emph{orthogonal} if and only if $\inp{\vec x}{\vec y} = 0$.
+\end{definition}
+
+\begin{definition}[Unit vector]
+  A \emph{unit vector} is a vector of length 1.
+\end{definition}
+
+\begin{definition}[Orthogonal Set]
+  An \emph{orthogonal set} is a set $S$ where $\inp{\vec x}{\vec y} = 0$ for all $\vec x, \vec y \in S$, $\vec x \ne \vec y$.
+\end{definition}
+
+\begin{definition}[Orthonormal Set]
+  An \emph{orthonormal set} is an \emph{orthogonal set} in which each vector is a \emph{unit vector}.
+\end{definition}
+
+\begin{defexample}[Standard Basis]
+  The standard basis in $\R^n$ is \emph{orthonormal}
+\end{defexample}
+
+\begin{theorem}[Orthonormal Coordinates]\label{oncoordinates}
+  Let $\setof{\vec v_1, \ldots, \vec v_n}$ be an \emph{orthogonal basis} of an \emph{inner product space} $V$.
+  Then for any $\vec x \in V$ we have:
+
+  $$\vec x = \sum_{i=1}^n \frac{\inp{\vec x_i}{\vec v_i}}{\norm{\vec v_i}^2} \vec v_i$$
+\end{theorem}
+\begin{proof}
+  Write $\vec x = a_1\vec v_1 + \ldots + a_n \vec v_n$. Then, for any $i$:
+
+  \begin{align}
+    \inp{\vec x}{\vec v_i} &= \inp{a_1 \vec v_1 + \ldots + a_n \vec v_n}{\vec v_i} \\
+                           &= a_1\inp{\vec v_1}{\vec v_i} + \ldots + a_n \inp{\vec v_n}{\vec v_i} \\
+                           &= a_i \inp{\vec v_i}{\vec v_i} \\
+                       a_i &= \frac{\inp{\vec x}{\vec v_i}}{\norm{\vec v_i}^2}
+  \end{align}
+\end{proof}
+\begin{remark}
+  If $\setof{\vec v_1, \ldots, \vec v_n}$ is \emph{orthonormal}, then $\vec x = \sum\limits_{i=1}^n \inp{\vec x_i}{\vec v_i} \vec v_i$
+\end{remark}
+\begin{remark}
+  The $\vec v_i$ coordinate of $\vec x$ depends only $\vec x$ and $\vec v_i$. It does not depend on any other vectors in the basis.
+\end{remark}
+\begin{remark}
+  In finite dimensions, \emph{inner product spaces} always have \emph{orthnormal bases}.
+\end{remark}
+
+\begin{theorem}[Orthogonal $\implies$ Linear Independence]\label{orthindep}
+  Let $S$ be an \emph{orthogonal set} of non-zero vectors, then $S$ is linearly independent.
+\end{theorem}
+\begin{proof}
+  For any $\vec v_1, \ldots, \vec v_n \in S$, set $a_1\vec v_1 + \ldots + a_n\vec v_n = \vec 0$.
+  By similar construction as \ref{oncoordinates}, we can show for any $i$ that:
+  $$a_i\inp{\vec v_i}{\vec v_i} = 0$$
+  Since $\vec v_i \ne 0$ by assumption, $a_i = 0$ for all $i$.
+\end{proof}
+
+\section{Gram-Schmidt Procedure}
+Given a basis $\setof{\vec w_1, \ldots \vec w_n}$ for a (finite dimensional) \emph{inner product space} $V$,
+the Gram-Schmidt gives an \emph{orthogonal basis} for $V$ as follows:
+\\
+\begin{center}
+  \begin{tabular}{r l}
+    Step \textcircled{1} & Set $\vec v_1 = \vec w_1$ \\ \\
+    Step \textcircled{2} & Set $\vec v_2 = \vec w_2 - \dfrac{\inp{\vec w_2}{\vec v_1}}{\norm{\vec v_1}^2}\vec v_1$ \\ \\
+    \ldots & \\ \\
+    Step \textcircled{i} & Set $\vec v_i = \vec w_i - \sum\limits_{j=1}^{i-1}\dfrac{\inp{\vec w_2}{\vec v_i}}{\norm{\vec v_i}^2}\vec v_i$
+  \end{tabular}
+\end{center}
+\begin{claim}
+  $\setof{\vec v_1, \ldots, \vec v_n}$ is an \emph{orthogonal basis} of $V$
+\end{claim}
+\begin{proof}
+  We first check that $\setof{\vec v_1, \ldots, \vec v_n}$ is \emph{orthogonal}.
+
+  We proceed by induction on $i$. If $n = 1$, we are vacuously done.
+
+  Otherwise, assume that $\setof{\vec v_1, \ldots, \vec v_i}$ is \emph{orthogonal}.
+  For any $1 \le j \le i$ we have:
+
+  \begin{align}
+    \inp{\vec v_{i+1}}{\vec v_j} &= \inp{\vec w_{i+1} - \sum_{k=1}^i \frac{\inp{\vec w_{i+1}}{\vec v_k}}{\norm{\vec v_k}^2}\vec v_k}{\vec v_j} \\
+                                 &= \inp{\vec w_{i+1} - \frac{\inp{\vec w_{i+1}}{\vec v_j}}{\norm{\vec v_j}^2}\vec v_j}{\vec v_j} \\
+                                 &= \inp{\vec w_{i+1}}{\vec v_j} - \frac{\inp{\vec w_{i+1}}{\vec v_j}}{\norm{\vec v_j}^2}\norm{\vec v_j}^2 \\
+                                 &= \inp{\vec w_{i+1}}{\vec v_j} - \inp{\vec w_{i+1}}{\vec v_j} \\
+                                 &= 0
+  \end{align}
+
+  Furthermore, $\vec v_i \ne \vec 0$. For $i=1$ we have $\vec v_1 = \vec w_1 \ne \vec 0$ by assumption.
+  Otherwise, we have $\vec v_i = \vec w_i - \vec x$ for $x \in \spanof{\vec w_1, \ldots, \vec w_{i-1}}$.
+  Thus $\vec v_i$ is a nonzero linear combination of $\setof{\vec w_1, \ldots, \vec w_i}$ and is therefore non-zero.
+
+  \indent Thus $\setof{\vec v_1, \ldots, \vec v_n}$ is a set of $n$ vectors in an $n$-dimensional space that are
+  orthogonal and nonzero. By \ref{orthindep} they are linearly independent, and thus a basis of $V$.
+\end{proof}
+\begin{remark}
+  To obtain an \emph{orthonormal basis} of $V$, simply divide each $\vec v_i$ by its length.
+  This is called \emph{normalizing}.
+\end{remark}
+
+
+\section{Orthogonal Complement}
+
+\begin{definition}[Orthogonal Complement]
+  Let $V$ be an \emph{inner product space} and $W \subset V$ a subspace. The orthogonal complement of $W$ is:
+
+  $$W^\perp = \setof{\vec v \in V : \inp{\vec v}{\vec w} = 0 \text{ for all } \vec w \in W}$$
+\end{definition}
+
+\begin{defexample}[Orthogonal complement of entire space is empty]
+  \begin{align*}
+    W &= V & W^\perp &= \setof{\vec v \in V : \inp{\vec v}{\vec w} = 0 \text{ for all } \vec w \in V} = \setof{\vec 0} \\
+      &    &         &\text{ because } \inp{\vec v}{\vec v} = 0 \implies \vec v = \vec 0
+  \end{align*}
+\end{defexample}
+
+\begin{defexample}[Orthogonal complement of empty subspace is the entire space]
+  \begin{align*}
+    W &= \setof{\vec 0} & W^\perp = V
+  \end{align*}
+\end{defexample}
+
+\begin{defexample}[Orthogonal complelment of a line is a plane]
+  \begin{align*}
+    V &= \R^3 & W &= \setof{(0,0,z) : z \in \R} & W^\perp = \setof{(x,y,0) : x,y \in \R}
+  \end{align*}
+\end{defexample}
