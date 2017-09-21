@@ -18,27 +18,37 @@
 %% environments
 
 % definition
+\theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 \newtheorem{defexample}{Example}[definition]
 
 % theorem
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{thmexample}{Example}[theorem]
-\newtheorem{corollary}{Corollary}[theorem]
-\newtheorem{lemma}{Lemma}[theorem]
+\theoremstyle{plain}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{corollary}{Corollary}[definition]
+\theoremstyle{definition}
+\newtheorem{thmexample}[corollary]{Example}
 
 % misc
-\newtheorem{claim}{Claim}[section]
+\newtheorem{claim}[definition]{Claim}
 \newtheorem*{remark}{Remark}
 
 %% math commands
 
+% caligraphic letters (script letters)
+\newcommand{\sU}{\mathcal{U}}
+
 % common sets (blackboard bold)
 \newcommand{\C}{\mathbb{C}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\Q}{\mathbb{Q}}
-\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\F}{\mathbb{F}}
 \newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+
+% complex conjugate
+\newcommand{\conj}[1]{\overline{#1}}
 
 % generally useful stuff
 \newcommand{\paren}[1]{\left(#1\right)}
@@ -46,19 +56,22 @@
 \newcommand{\textfn}[2]{\text{#1}\paren{#2}}
 \newcommand{\spanof}[1]{\text{span}\setof{#1}}
 
+% image
+\DeclareMathOperator{\im}{im}
+
 % inner product
 \newcommand{\inp}[2]{\left\langle #1 , #2 \right\rangle}
 
-% complex conjugate
-\newcommand{\conj}[1]{\overline{#1}}
+% matrix stuff
+\newcommand{\transpose}[1]{{#1}^{\intercal}}
+\newcommand{\tr}[1]{\textfn{tr}{#1}}
 
 % norm
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 \newcommand{\abs}[1]{\left|#1\right|}
 
-% matrix stuff
-\newcommand{\transpose}[1]{{#1}^{\intercal}}
-\newcommand{\tr}[1]{\textfn{tr}{#1}}
+% projection
+\newcommand{\proj}[2][]{\text{proj}_{#1}\paren{#2}}
 
 \begin{document}
 
@@ -75,5 +88,6 @@
 \mainmatter
 
 \include{01}
+\include{02}
 
 \end{document}

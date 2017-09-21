@@ -1,0 +1,195 @@
+\chapter{September 15 - September 20}
+
+\section{Orthogonal Complement (continued)}
+
+\begin{theorem}\label{orthisomorphism}
+  Let $V$ be a finite-dimensional inner product space, and $W \subset V$ be a subspace, then:
+    $$V \simeq W \oplus W^\perp$$
+  via the transformation $T : W \oplus W^\perp \to V$ given by:
+    $$T(\vec w, \vec w') = \vec w + \vec w'$$
+\end{theorem}
+\begin{proof}
+  We prove the theorem by writing an inverse for $T$.
+  Let $\setof{\vec w_1, \ldots, \vec w_k}$ be an orthonormal basis of $W$ and define:
+  \begin{align}
+    \Psi &: V \to W \oplus W^\perp \\
+    \Psi(\vec v) &= \paren{\sum_{i=1}^k \inp{\vec v}{\vec w_i}\vec w_i ~,~ \vec v - \sum_{i=1}^k \inp{\vec v}{\vec w_i}\vec w_i}
+  \end{align}
+  $\Psi$ is well defined since the first entry is in $W$ by being a linear combination of $\vec w_i$, and the right entry is in $W^\perp$ because it is orthogonal to each $\vec w_i$ in our basis.
+  It clear that $T \circ \Psi = \text{id}_V$, so it remains to be shown that $\Psi \circ T = \text{id}_{W \oplus W^\perp}$:
+  \begin{align}
+    \Psi\paren{T\paren{\vec w, \vec w'}}
+      &= \Psi(\vec w + \vec w') \\
+      &= \paren{\sum_{i=1}^k \inp{\vec w + \vec w'}{\vec w_i}w_i ~,~ \vec w + \vec w' - \sum_{i=1}^k \inp{\vec w + \vec w'}{\vec w_i}w_i} \\
+      &= \paren{\sum_{i=1}^k \inp{\vec w}{\vec w_i}w_i ~,~ \vec w + \vec w' - \sum_{i=1}^k \inp{\vec w}{\vec w_i}w_i} \\
+      &= \paren{\vec w, \vec w'}
+  \end{align}
+  Thus $T$ and $\Psi$ are inverses. Since $T$ and $\Psi$ are linear transformations, $T$ is an isomorphism.
+\end{proof}
+
+\begin{corollary}[Extension of orthonormal basis]
+  Let $\setof{\vec w_1, \ldots, \vec w_k}$ be an orthonormal basis of a subspace $W$.
+  One can extend this to an orthornomal basis of the entire space:
+    $$\setof{\vec w_1, \ldots, \vec w_k, \vec v_{k+1}, \ldots, \vec v_n}$$
+  where $\setof{\vec v_{k+1}, \ldots, \vec v_n}$ is an orthonormal basis of $W^\perp$.
+\end{corollary}
+
+\begin{corollary}[Dimension of orthogonal complement]
+  $$\dim V = \dim W + \dim W^\perp$$
+\end{corollary}
+
+\begin{corollary}[Duality of orthogonal complement]
+  $$\paren{W^\perp}^\perp = W$$
+\end{corollary}
+
+\begin{corollary}[Intersection of subspace and orthogonal complement]
+  $$W \cap W^\perp = (0)$$
+\end{corollary}
+
+\begin{definition}[Projection onto a subspace]
+  Let $W \subset V$ be a subspace and $\vec v \in V$. Then for $\Psi : V \to W \oplus W^\perp$ as defined in \ref{orthisomorphism},
+  we define the \emph{projection of $\vec v$ onto $W$} to be the first coordinate $\Psi(\vec v)$, denoted:
+    $$\proj[W]{\vec v}$$
+\end{definition}
+
+\begin{remark}
+  If $\setof{\vec w_1, \ldots, \vec w_k}$ is an orthonormal basis of $W$, then:
+    $$\proj[W]{\vec v} = \sum_{i=1}^k \inp{\vec v}{\vec w_i} \vec w_i$$
+\end{remark}
+
+\section{Adjoints}
+
+\begin{definition}[Conjugate Transpose]
+  For any matrix $B$, we define $B^*$ to be the \emph{conjugate transpose} given by taking the conjugate of each entry in $\transpose{B}$, that is:
+    $$B^* = \conj{\transpose{B}}$$
+\end{definition}
+
+\begin{lemma}[Unique inner product form of a linear transformation]\label{lininpform}
+  Let $\sU : V \to \F$ be a linear transformation,
+  then there exists some unique $z \in V$ such that:
+    $$\sU(\vec v) = \inp{\vec v}{\vec z} \text{ for all } \vec v \in V$$
+\end{lemma}
+\begin{proof}
+  Let $\setof{\vec v_1, \ldots, \vec v_n}$ be an orthonormal basis of $V$ and define $\vec z \in V$ to be:
+    $$\vec z = \conj{\sU(\vec v_1)}\vec v_1 + \ldots + \conj{\sU(\vec v_n)}\vec v_n$$
+  Then we check that $\sU(\vec v) = \inp{\vec v}{\vec z}$ for all $\vec v \in V$:
+  \begin{align}
+    \sU(\vec v) &= \sU\paren{a_1\vec v_1 + \ldots + a_n \vec v_n} \\
+                &= a_1\sU(\vec v_1) + \ldots + a_n\sU(\vec v_n)
+  \end{align}
+  \begin{align}
+    \inp{\vec v}{\vec z} &= \inp{\vec v}{\conj{\sU(\vec v_1)}\vec v_1 + \ldots + \conj{\sU(\vec v_n)}\vec v_n} \\
+                         &= \sU(\vec v_1)\inp{\vec v}{\vec v_1} + \ldots + \sU(\vec v_n)\inp{\vec v}{\vec v_n} \\
+                         &= a_1 \sU(\vec v_1) + \ldots + a_n \sU(\vec v_n) \\
+                         &= \sU(\vec v)
+  \end{align}
+  To show that $\vec z$ is unique, suppose that $\inp{\vec v}{\vec z} = \inp{\vec v}{\vec z'}$ for all $\vec v \in V$, then:
+  $$0 = \inp{\vec v}{\vec z} - \inp{\vec v}{\vec z'} = \inp{\vec v}{\vec z - \vec z'}$$
+  Since this holds for all $\vec v$, we must have $\vec z - \vec z' = 0$ (indeed, $V^\perp = (0)$), we have $\vec z' = \vec z$ as required.
+\end{proof}
+
+\begin{theorem}[Existence of unique adjoint]
+  Let $T : V \to V$ be a linear transformation on an inner product space $V$.
+  There exists a unique linear transformation $T^* : V \to V$ satisfying:
+    $$\inp{T\vec x}{\vec y} = \inp{\vec x}{T^*\vec y} \text{ for all } \vec x, \vec y \in V$$
+  This $T^*$ is called the \emph{adjoint} of $T$.
+\end{theorem}
+\begin{proof}
+  For any $\vec y \in V$, define $g_{\vec y} : V \to \F$ (where $\F$ is $\C$ or $\R$), by:
+  $$g_{\vec y}(\vec v) = \inp{T\vec v}{\vec y}$$
+  Then $g_{\vec y}$ is a linear transformation because:
+  \begin{align}
+    g_{\vec y}\paren{\vec v + \vec w}
+      &= \inp{T\paren{\vec v + \vec w}}{\vec y} \\
+      &= \inp{T\vec v + T\vec w}{\vec y} \\
+      &= \inp{T\vec v}{\vec y} + \inp{T\vec w}{\vec y} \\
+      &= g_{\vec y}(\vec v) + g_{\vec y}(\vec w)
+  \end{align}
+  \begin{align}
+    g_{\vec v}\paren{c \vec v}
+      &= \inp{T\paren{c \vec v}}{\vec y} \\
+      &= c\inp{T\vec v}{\vec y} \\
+      &= cg_{\vec y}(\vec v)
+  \end{align}
+  Then we can define $T^* : V \to V$ by the map from $\vec y \in V$ to the unique $\vec z$ generated by \ref{lininpform} for $g_{\vec y}$.
+  Then, by definition of $\vec z$ we have:
+  $$\inp{T \vec x}{\vec y} = g_{\vec y}(\vec x) = \inp{\vec x}{\vec z} = \inp{\vec x}{T^*\vec y}$$
+  By uniqueness of $\vec z$, this mapping $T^*$ is unique. Thus it remains only to show that $T^*$ is linear.
+  For all $\vec x$, $\vec y$, $\vec z \in V$ and $c \in \F$:
+  \begin{align}
+    \inp{\vec x}{T^*\paren{c \vec y}}
+      &= \inp{T\vec x}{c \vec y} \\
+      &= \conj{c}\inp{T \vec x}{\vec y} \\
+      &= \conj{c}\inp{\vec x}{T^* \vec y} \\
+      &= \inp{\vec x}{c T^* \vec y}
+  \end{align}
+  By the same orthogonal complement dimension argument as in \ref{lininpform}, since this holds for all $\vec x$, $T^*\paren{c \vec y} = cT^* \vec y$ as required. Similarly:
+  \begin{align}
+    \inp{\vec x}{T^*\paren{\vec y + \vec z}}
+      &= \inp{T\vec x}{\vec y + \vec z} \\
+      &= \inp{T\vec x}{\vec y} + \inp{T\vec x}{\vec z} \\
+      &= \inp{\vec x}{T^* \vec y} + \inp{vec x}{T^* \vec z} \\
+      &= \inp{\vec x}{T^* \vec y + T^* \vec z}
+  \end{align}
+  Again, by the argument used in \ref{lininpform}, since this holds for all $\vec x$, we have $T^*\paren{\vec y + \vec z} = T^*\vec y + T^*\vec z$ as required.
+  Thus $T^*$ is unique and linear as required.
+\end{proof}
+
+\begin{theorem}[Equivalence of conjugate transpose and adjoint]\label{conjtradjequiv}
+  If $B$ is an orthonormal basis of $V$, then:
+    $$[T]_B^* = [T^*]_B$$
+\end{theorem}
+\begin{proof}
+  Let $B = \setof{\vec v_1, \ldots, \vec v_n}$, $[T]_B = (a_{ij})$ and $[T^*]_B = (b_{ji})$.
+  Then for any $i$, $j$:
+  $$b_{ij} = \inp{T^* \vec v_j}{\vec v_i} = \inp{\vec v_j}{T \vec v_i} = \conj{\inp{T \vec v_i}{\vec v_j}} = \conj{a_{ji}}$$
+\end{proof}
+
+\section{Least Squares (example)}
+Say $\setof{(x_1,y_1), \ldots, (x_m,y_n)}$ is a set of points in $\R^2$ and we want to find the line that best fits the data.
+More precisely, we want to find $a, b \in \R$ such that the line $y = ax + b$ minmizes the quantity:
+$$E = \sum_{i=1}^m\abs{y_i-(ax_i+b)}^2$$
+Define the following:
+\begin{align*}
+  A &= \begin{bmatrix} x_1 & 1 \\ \vdots & \vdots \\ x_m & 1 \end{bmatrix} &
+  \vec x &= \begin{bmatrix}a \\ b\end{bmatrix} &
+  \vec y &= \begin{bmatrix}y_1 \\ \vdots \\ y_m\end{bmatrix}
+\end{align*}
+Then we can rewrite the error $E$ as:
+  $$E = \norm{A\vec x - \vec y}^2$$
+This is minimized when $A\vec x = \proj[\im A]{\vec y}$, so we just need to find $\vec x$ given $A\vec x$.
+
+\begin{remark}[Author's Note]
+  In the following section we will take the adjoint of $A$ even though $A : \R^2 \to \R^n$ and we only defined the adjoint for endofunctions.
+  You can justify this to yourself by imagining the extensions of $A$ and $\vec x$ given by:
+  \begin{align*}
+    A' &= \begin{bmatrix}
+      x_1 & 1 & 0 & \ldots & 0 \\
+      \vdots & \vdots & \vdots & \ddots & \vdots \\
+      x_m & 1 & 0 & \ldots & 0
+    \end{bmatrix} &
+    \vec x &= \begin{bmatrix}a \\ b \\ 0 \\ \vdots \\ 0\end{bmatrix}
+  \end{align*}
+  And convincing yourself that we have not fundamentally changed the problem.
+  In general though, there is something called the Hermitian adjoint which properly describes this property for $A : H_1 \to H_2$ where $H_1$ and $H_2$ are Hilbert spaces that have an appropriate inner product.
+  I don't know anything about Hilbert spaces, this just happens to be a thing that exists.
+\end{remark}
+
+We know that $\inp{A\vec x}{\vec y} = \inp{\vec x}{A^*\vec y}$. Thus, if $A^*A \vec x = \vec 0$ we have:
+\begin{align}
+  A^*A\vec x = \vec 0
+    &\implies \inp{A^*A\vec x}{\vec x} = 0 \\
+    &\implies \inp{A\vec x}{A \vec x} = 0 \\
+    &\implies A\vec x = \vec 0
+\end{align}
+This tells us that if $\ker A = (\vec 0)$, then $\ker (A^*A) = (\vec 0)$ meaning $A^*A$ is invertible.
+In any practical case $\ker A = (\vec 0)$ since, otherwise, that would mean all of our $x_i$s are equal, so our line doesn't represent anything interesting.
+Thus, if $\vec x$ is our best fit line, then:
+\begin{align}
+           & A \vec x - \vec y \in (\im A)^\perp \\
+  \implies & \inp{A \vec z}{A\vec x - \vec y} = 0 \text{ for all } \vec z \in \R^2 \\
+  \implies & \inp{\vec z}{A^*\paren{A \vec x - \vec y}} = 0 \\
+  \implies & A^*\paren{A \vec x - \vec y} = 0 \\
+  \implies & A^*A\vec x = A^* \vec y \\
+  \implies & \vec x = \paren{A^*A}^{-1}A^* \vec y
+\end{align}
