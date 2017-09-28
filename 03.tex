@@ -1,0 +1,280 @@
+\chapter{September 22 - September 27}
+
+\section{Normal Operators}
+
+\begin{definition}
+  Let $T : V \to V$ be a linear transformation on an inner product space $V$.
+  We say $T$ is \emph{normal} if:
+  $$T^* T = T T^*$$
+\end{definition}
+
+\begin{remark}
+  If there exists an orthonormal basis $B$ such that $[T]_B$ is diagonal,
+  then $[T^*]_B = [T]^*_B$ is also diagonal thus:
+  \begin{align}
+    [T]^*_B [T]_B &= [T]_B[T]^*B \\
+             T^*T &= T T^*
+  \end{align}
+  So $T$ is \emph{normal}.
+\end{remark}
+
+\begin{definition}
+  Let $T : V \to V$ be a linear transformation on a vector space $V$,
+  and let $W$ be a subspace of $V$. We say $W$ is $T$-invariant if,
+  for all $\vec w \in W$, $T\vec w \in W$.
+\end{definition}
+
+\begin{lemma}[Schur]\label{schurlemma}
+  Let $T : V \to V$ be a linear transformation on an inner product space $V$.
+  If the characteristic polynomial of $T$ splits completely,
+  then there is an orthonormal basis $B$ of $V$ such that $[T]_B$ is upper triangular.
+\end{lemma}
+\begin{proof}
+  We induce on $\dim V$.
+  The case $\dim V = 1$ is trivial since all $1 \times 1$ matrices are upper triangular.
+  So we assume the lemma holds for all inner product spaces $W$ with $\dim W < \dim V$.
+  Since the characteristic polynomial splits completely, there is some eigenvector $\vec v \in V$
+  and corresponding eigenvalue $\lambda$ satisfying:
+    $$T\vec v = \lambda \vec v$$
+  Thus, for any $\vec x \in V$:
+    \begin{align}
+      0 &= \inp{\paren{T-\lambda I}\vec v}{\vec x} \\
+        &= \inp{\vec v}{\paren{T^*-\conj{\lambda}I}\vec x}
+    \end{align}
+  Which means that $\vec v \in \paren{\im \paren{T^* - \conj{\lambda}I}}^\perp$.
+  Thus $\paren{T^*-\conj{\lambda}I}$ is not surjective, so by rank-nullity theorem, there is
+  some nonzero $\vec z \in \ker\paren{T^* - \conj{\lambda}I}$, giving:
+    \begin{align}
+      \paren{T^* - \conj{\lambda}I} \vec z &= 0 \\
+                                T^* \vec z &= \conj{\lambda} \vec z
+    \end{align}
+  Without loss of generality, assume that $\norm{\vec z} = 1$, since the equality holds under scalar multiplication of $\vec z$.
+  Let $W = \spanof{\vec z}$, then $W$ is $T^*$-invariant. Then, for all $\vec y \in W^\perp$:
+    \begin{align}
+      \inp{T \vec y}{c \vec z}
+        &= \conj{c}\inp{\vec y}{T^* \vec z} \\
+        &= \conj{c}\lambda\inp{\vec y}{\vec z} \\
+        &= 0 \text{ by choice of } \vec y
+    \end{align}
+  Thus $W^\perp$ is $T$-invariant. This means $T\big\rvert_{W^\perp} : W^\perp \to W^\perp$ is a linear transformation
+  (whose characteristic polynomial splits completely, proof omitted in this class but this follows from the fact that $T$ splits),
+  and $\dim W^\perp = \dim V - 1$. Thus, by our inductive hypothesis there exists an orthonormal basis $\beta = \setof{\vec v_1, \ldots, \vec v_{n-1}}$
+  of $W^\perp$ such that $\left[T\big\rvert_{W^{\perp}}\right]_P$ is upper triangular. Thus:
+  \begin{align}
+    [T^*]_B &= \begin{bmatrix}
+      \left[T^*\big\rvert_{W^\perp}\right]_\beta & 0 \\
+      * & \conj{\lambda}
+    \end{bmatrix} \\
+    [T]_B &= \begin{bmatrix}
+      \left[T\big\rvert_{W^\perp}\right]_\beta & * \\
+      0 & \lambda
+    \end{bmatrix}
+  \end{align}
+  which is upper triangular.
+\end{proof}
+
+\begin{theorem}[Orthonormal Diagonalizability of Complex Linear Transformations]\label{complexorthonormaldiagthm}
+  If $T : V \to V$ is a \emph{normal} linear transformation on a complex inner product space $V$,
+  then there exists an orthonormal basis $B$ such that $[T]_B$ is diagonal.
+\end{theorem}
+\begin{proof}
+  Since all polynomials split over $\C$, by \ref{schurlemma}, there is an orthonormal basis:
+    $$B = \setof{\vec v_1, \ldots, \vec v_n}$$
+  such that $[T_B]$ is upper triangular. We will show that $[T]_B$ is also diagonal.
+  Let $[T]_B = (a_{ij})$, we will show that $a_{ij} = 0$ if $i \ne j$ by induction on $j$.
+  If $j = 1$, this is immediate from upper triangularity, so if the claim holds for all $j' < j$. If $i < j$ then:
+    \begin{align}
+      0 &= \norm{T \vec v_i - \lambda \vec v_i}^2 \text{ for } \lambda = a_{ii} \\
+        &= \inp{T \vec v_i - \lambda \vec v_i}{T \vec v_i - \lambda \vec v_i} \\
+        &= \inp{(T-\lambda I)\vec v_i}{(T-\lambda I)\vec v_i} \\
+        &= \inp{\vec v_i}{(T-\lambda I)^*(T - \lambda I)\vec v_i} \\
+        &= \inp{\vec v_i}{(T-\lambda I)(T - \lambda I)^* \vec v_i} \\
+        &= \inp{(T^* - \conj\lambda I)\vec v_i}{(T^* - \conj \lambda I)\vec v_i} \\
+        &= \norm{T^* \vec v_i - \lambda \vec v_i}
+    \end{align}
+  Thus $T^* \vec v_i = \conj\lambda \vec v_i$. Then consider:
+    $$T \vec v_j = a_{1j}\vec v_1 + \cdots + a_{jj}\vec v_j$$
+  By orthonormality of our basis, it follows that:
+    \begin{align}
+      a_{ij} &= \inp{T\vec v_j}{\vec v_i} \\
+             &= \inp{\vec v_j}{T^* \vec v_i} \\
+             &= \inp{\vec v_j}{\conj\lambda \vec v_i} \\
+             &= 0
+    \end{align}
+  As required, each entry $a_{ij}$ with $i < j$ is 0, and entries with $i > j$ follow from upper triangularity.
+\end{proof}
+
+\begin{corollary}\label{complexorthonormaldiag}
+  If $T : V \to V$ is a linear transformation on a complex inner product space $V$,
+  then there exists an othonormal basis $B$ such that $[T]_B$ is diagonal if and only if $T$ is \emph{normal}.
+\end{corollary}
+
+\begin{remark}
+  \ref{complexorthonormaldiag} does not apply to real inner product spaces.
+  Consider $V : \R^2$ and $T : \R^2 \to R^2$ given by the rotation matrix:
+    $$\begin{bmatrix}
+      \cos \theta & \sin \theta \\
+      -\sin \theta & \cos \theta
+    \end{bmatrix}$$
+  Then $T^*$ describes the opposite rotation, thus $T^* T = T T^* = I$ so $T$ is \emph{normal},
+  however if $\theta \notin \pi \Z$, $T$ has no real eigenvectors and is thus not diagonalizable.
+\end{remark}
+
+\section{Self-Adjoint Operators}
+
+\begin{definition}
+  A linear transformation $T$ is \emph{self-adjoint} (or Hermitian) if $T = T^*$.
+\end{definition}
+
+\begin{remark}
+  If $T : V \to V$ is a linear transformation on a real inner product space $V$,
+  and there exists an orthonormal basis $B$ for which $[T]_B$ is diagonal, then:
+  $$[T]_B = [T]^*_B$$
+  So $T$ is \emph{self-adjoint}
+\end{remark}
+
+\begin{remark}
+  If $T = T^*$, then $T^* T = T T^*$ so $T$ is normal.
+\end{remark}
+
+\begin{theorem}[Orthonormal Diagonalizability of Real Linear Transformations]\label{realorthonormaldiag}
+  If $T : V \to V$ is a linear transformation on a real inner product space $V$,
+  then $T$ is \emph{self-adjoint} if and only if there is an orthonormal basis $B$
+  such that $[T]_B$ is diagonal.
+\end{theorem}
+\begin{proof}
+  Note that the characteristic polynomial of $T$ must split over $\C$, so consider any eigenvector $\vec x$ and eigenvalue $\lambda \in \C$ such that
+  $T \vec x = \lambda \vec x$, then:
+  \begin{align}
+    (T-\lambda I)\vec x = \vec 0
+    &\implies (T^*-\conj\lambda I) \vec x = 0 \text{(see proof of \ref{complexorthonormaldiagthm})} \\
+    &\implies T^*\vec x = \conj\lambda x
+  \end{align}
+  So if $T$ is \emph{self-adjoint}:
+    \begin{align}
+      \conj\lambda \vec x &= T^*\vec x = T\vec x = \lambda \vec x \\
+      \conj\lambda &= \lambda
+    \end{align}
+  Thus $\lambda \in \R$, so all eigenvalues of $T$ are real.
+  Thus the characteristic polynomial of $T$ splits completely over $\R$, so invoking \ref{schurlemma},
+  there must exist an orthonormal basis $B$ such that $[T]_B$ is upper triangular.
+  However $[T]^*_B = [T^*]_B$ which must be lower triangular, so $[T]_B$ is both upper and lower triangular,
+  meaning $[T]_B$ is diagonal.
+\end{proof}
+
+\begin{corollary}[Orthonormal Diagonalizability of Symmetric Real Matrices]
+  A real matrix is orthogonally diaganalizable if and only if it's symmetric.
+\end{corollary}
+\begin{proof}
+  A real matrix that is \emph{self-adjoint} is just a symmetric matrix, so this follows immediately from \ref{realorthonormaldiag}.
+\end{proof}
+
+\section{Isometries}
+
+\begin{definition}
+  A linear transformation $T : V \to W$ from an inner product space $V$ to an inner product space $W$ is an \emph{isometry}
+  if $\inp{T \vec x}{T \vec y} = \inp{\vec x}{\vec y}$ for all $\vec x$, $\vec y \in V$.
+\end{definition}
+
+\begin{definition}
+  An \emph{isometry} $T$ is \emph{unitary} if $T$ is surjective.
+\end{definition}
+
+\begin{remark}
+  Every \emph{isometry} $T$ is injective because:
+    \begin{align}
+      T \vec x = \vec 0
+        &\implies \inp{\vec x}{\vec x} = \inp{T \vec x}{T \vec x} = 0 \\
+        &\implies \vec x = 0
+    \end{align}
+  Thus $\ker T = (0)$.
+\end{remark}
+
+\begin{remark}[Author's Note]
+  Again, in this section, we will use the adjoint of $T$ even if $T$ is not an endomorphism.
+  In finite dimensional vector spaces, this exists, and the conjugate transpose of the
+  matrix representation still works, you'll just have to convince yourself.
+\end{remark}
+
+\begin{remark}
+  For every \emph{isometry} $T : V \to W$, $T^*T = I$ since, for all $\vec x, \vec y \in V$:
+  \begin{align}
+    \inp{T \vec x}{T \vec y} &= \inp{\vec x}{\vec y} \\
+    \inp{\vec x}{T^* T \vec y} &= \inp{\vec x}{\vec y} \text{ for any } \vec x
+  \end{align}
+\end{remark}
+
+\begin{remark}
+  If $T$ is \emph{unitary}, $T$ is invertible so $T T^* = I = T^* T$, so $T$ is also normal.
+\end{remark}
+
+\begin{lemma}\label{selfadjointlintranszero}
+  Let $\sU : V \to V$ be a self-adjoint linear transformation, and $\inp{\vec x}{\sU \vec x} = 0$ for all $\vec x \in V$,
+  then $\sU = 0$.
+\end{lemma}
+\begin{proof}
+  Suppose $\vec x$ is an eigenvector of $\sU$ and $\lambda$ be its corresponding eigenvalue, then:
+  \begin{align}
+    0 &= \inp{\vec x}{\sU \vec x} \\
+      &= \inp{\vec x}{\lambda \vec x} \\
+      &= \conj{\lambda}\inp{\vec x}{\vec x}
+  \end{align}
+  But $\vec x \ne \vec 0$ by choice of $\vec x$ being an eigenvector, so $\lambda = 0$.
+  Since all eigenvalues of $\sU$ are 0 and $\sU$ is diagonalizable (since it is self-adjoint), $\sU = 0$.
+\end{proof}
+
+\begin{theorem}
+  Let $T : V \to V$ be a surjective linear transformation on a finite dimensional inner product space $V$, then the following are equivalent:
+  \begin{enumerate}[i.]
+    \item $T T^* = T^* T = I$
+    \item $\inp{T \vec x}{T \vec y} = \inp{\vec x}{\vec y}$ for all $\vec x, \vec y \in V$
+    \item If $B$ is an orthonormal basis, then so is $T(B)$
+    \item There exists an orthonormal basis $B$ such that $T(B)$ is also orthonormal
+    \item $\norm{T \vec x} = \norm{\vec x}$ for all $\vec x \in V$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof} We will prove a ring of implications:
+  \begin{enumerate}[i.] % too lazy to figure this formatting out
+    \item{$\implies$ ii.}
+      For all $\vec x, \vec y \in V$:
+        \begin{align}
+          \inp{T \vec x}{T \vec y}
+            &= \inp{\vec x}{T^* T \vec y} \\
+            &= \inp{\vec x}{I \vec y} \\
+            &= \inp{\vec x}{\vec y}
+        \end{align}
+    \item{$\implies$ iii.}
+      Let $B$ be a basis $\setof{\vec v_1, \ldots, \vec v_n}$, then for any $\vec v_i$, $\vec v_j \in B$:
+        $$\inp{T \vec v_i}{T \vec v_j} = \inp{\vec v_i}{\vec v_j} = \delta_{ij} = \begin{cases}
+          0 & i \ne j \\
+          1 & i = j
+        \end{cases}$$
+      Thus $T(B)$ is orthonormal.
+      Recall from \ref{orthindep} that this is sufficient to show $T(B)$ is linearly independent and thus a basis.
+    \item{$\implies$ iv.}
+      Immediate from the fact that $V$ is finite dimensional so an orthonormal basis exists.
+    \item{$\implies$ v.}
+      For any $\vec x \in V$ write:
+        $$\vec x = a_1 \vec v_1 + \cdots + a_n \vec v_n$$
+      where $\setof{\vec v_1, \ldots, \vec v_n}$ are a subset of the orthonormal basis $B$ provided by the assumption. Then:
+      \begin{align}
+        \norm{T \vec x}^2
+          &= \norm{T(a_1\vec v_1 + \cdots + a_n \vec v_n)}^2 \\
+          &= \norm{a_1T\vec v_1 + \cdots + a_nT\vec v_n}^2 \\
+          &= \abs{a_1}^2 + \cdots + \abs{a_n}^2 \\
+          &= \norm{\vec x}^2
+      \end{align}
+      By non-negativity of the norm, v. holds.
+    \item{$\implies$ i.} From our assumption, for all $\vec x$:
+      \begin{align}
+        \norm{\vec x}
+          &= \norm{T \vec x} \\
+          &= \inp{T \vec x}{T \vec x} \\
+          &= \inp{\vec x}{T^* T \vec x}
+      \end{align}
+      We have $\inp{\vec x}{(T^*T - I) \vec x} = 0$ for all $\vec x$.
+      Note that $(T^*T - I)$ is self-adjoint because $(T^*T-I)^* = T^*T - I$.
+      Thus by \ref{selfadjointlintranszero}, $T^*T-I = 0$ so $T^*T = I$.
+      Thus $T^*$ is a left inverse of $T$, so since $T$ is an endomorphism, $T^*T = I = T T^*$.
+  \end{enumerate}
+\end{proof}
