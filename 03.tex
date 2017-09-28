@@ -180,6 +180,11 @@
   An \emph{isometry} $T$ is \emph{unitary} if $T$ is surjective.
 \end{definition}
 
+\begin{definition}
+  Let $V$, $W$ be inner product spaces. If there exists a \emph{unitary isometry} $T : V \to W$,
+  we say $V$ and $W$ are \emph{isometric}.
+\end{definition}
+
 \begin{remark}
   Every \emph{isometry} $T$ is injective because:
     \begin{align}
@@ -223,7 +228,7 @@
   Since all eigenvalues of $\sU$ are 0 and $\sU$ is diagonalizable (since it is self-adjoint), $\sU = 0$.
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}\label{isometryequivalence}
   Let $T : V \to V$ be a surjective linear transformation on a finite dimensional inner product space $V$, then the following are equivalent:
   \begin{enumerate}[i.]
     \item $T T^* = T^* T = I$
@@ -278,3 +283,41 @@
       Thus $T^*$ is a left inverse of $T$, so since $T$ is an endomorphism, $T^*T = I = T T^*$.
   \end{enumerate}
 \end{proof}
+
+\begin{corollary}
+  Let $V$, $W$ be \emph{isometric} finite dimensional inner product spaces, then $\dim V = \dim W$.
+\end{corollary}
+
+\begin{corollary}
+  If $\dim V = \dim W$ for finite dimensional inner product spaces $V$, $W$, then $V$, $W$ are \emph{isometric}.
+\end{corollary}
+\begin{proof}
+  Since $V$ and $W$ are finite dimensional, they have orthonormal bases $\setof{\vec v_1, \ldots, \vec v_n}$,
+  $\setof{\vec w_1, \ldots, \vec w_n}$. Then we can define a linear transformation $T : V \to W$
+  given by $T(\vec v_i) = \vec w_i$ for all $i$.
+  By \ref{isometryequivalence}, $T$ is an \emph{isometry}.
+\end{proof}
+
+\begin{corollary}
+  Any $n$-dimensional inner product space is \emph{isometric} to $\R^n$ or $\C^n$
+  with the standard inner product.
+\end{corollary}
+
+\begin{corollary}
+  If $T : V \to W$ is \emph{unitary}, then its eigenvalues all have absolute value 1.
+\end{corollary}
+\begin{proof}
+  For all $\vec x \in T$:
+  $$\norm{\vec x} = \norm{T \vec x} = \norm{\lambda \vec x} = \abs{\lambda}\norm{\vec x}$$
+  Thus for any eigenvalue $\lambda$, $\abs{\lambda} = 1$.
+\end{proof}
+
+\begin{remark}
+  An orthogonally diagonalizable transformation is the same as a transformation that has an orthonormal basis of eigenvectors:
+  \begin{enumerate}[i.]
+    \item If $T$ is an isometry over real inner product spaces, then $T$ is self-adjoint and orthogonal if and only if
+    it is orthogonally diagonalizable with eigenvalues $\pm 1$.
+    \item If $T$ is an isometry over complex product spaces, then $T$ is unitary if and only if it is
+    orthogonally diagonalizable with eigenvalues of length $1$.
+  \end{enumerate}
+\end{remark}
