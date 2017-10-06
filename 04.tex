@@ -1,0 +1,173 @@
+\chapter{September 29 - October 4}
+
+\section{Orthogonal Matrices}
+
+Let $T : \R^n \to \R^n$ be an orthogonal linear transformation:
+
+\begin{definition}
+  We say $B$ is an \emph{eigenbasis} for $T$ if $B$ is an orthonormal basis of eigenvectors of $T$.
+\end{definition}
+
+\begin{remark}
+  If $n=1$, $T$ is one of the following:
+    \begin{align*}\bmatr{1} & & \bmatr{-1}\end{align*}
+\end{remark}
+
+\begin{remark}
+  If $n=2$, and $A$ is the matrix for $T$, $A$ must be a real matrix satisfying:
+    $$A\transpose{A} = \transpose{A}A = I$$
+  and since $\setof{(1,0), (0,1)}$ is an orthonormal basis we must have:
+    $$\norm{A\pmatr{1 \\ 0}} = \norm{A\pmatr{0 \\ 1}} = 1$$
+  thus $A$ must be of the following form for some $\theta \in [0,2\pi)$:
+  $$A = \pmatr{
+    \cos \theta & \pm \sin \theta \\
+    \sin \theta & \mp \cos \theta
+  }$$
+\end{remark}
+
+\begin{remark}
+  If $n=2$, by lifting $T$ to being a unitary transformation $\C^n \to \C^n$,
+  we can distinguish between rotations and reflections from the eigenvectors and eigenvalues of $A$.
+  We know the eigenvalues must be complex numbers of length 1, so if they are real, they are $\pm 1$.
+  So let $A$ be the matrix of $T$ under an eigenbasis, it must be of the form:
+    \begin{center}
+      \begin{tabular}{c c c}
+        $\bmatr{
+          \pm 1 & 0 \\
+          0 & \pm 1
+        }$ & or & $\bmatr{
+          \pm 1 & 0 \\
+          0 & \mp 1
+        }$ \\
+        rotation & & reflection
+      \end{tabular}
+    \end{center}
+  Otherwise, if the eigenvalues are not real, they are of the form $\cos \theta + i \sin \theta$ for some $\theta \in [0,2\pi)$
+  Matrices of the form:
+    $$A = \pmatr{\cos \theta & -\sin \theta \\ \sin \theta & \cos \theta}$$
+  have eigenvalues $\cos \theta \pm i \sin \theta$ and are rotations.
+\end{remark}
+\begin{remark}
+  An orthogonal 2x2 matrix can be the composition of a rotation and a reflection.
+\end{remark}
+
+\begin{theorem}
+  Let $A$ be a real, orthogonal, $n \times n$ matrix. Then $A$ is block diagonal with blocks of size $0$ or $1$.
+\end{theorem}
+\begin{proof}
+  Lift $A$ to a $n \times n$ complex, unitary matrix. Then, since the entries are real
+    $$A\vec x = \lambda \vec x \text{ for } \vec x \ne 0 \implies A\vec x = \conj{\lambda}\conj{\vec x}$$
+  Thus non-real eigenvalues come in conjugate pairs. Since $A$ is unitary as a complex matrix,
+  we can find an \emph{eigenbasis} $B$ of $\C^n$ for $A$. Then consider an arbitrary pair of eigenvalues $\vec v$ and $\vec w = \conj{\vec v}$.
+  We want to find two real vectors $\vec x, \vec y \in \R^n$ such that $\spanof{\vec x, \vec y} = \spanof{\vec v, \vec w}$ over $\C$.
+  So define
+    \begin{align}
+      \vec x &=  \vec v +  \vec w  & &(= 2\Re(\vec v)) \\
+      \vec y &= i\vec v + i\vec w  & &(= -2\Im(\vec v))
+    \end{align}
+  Clearly, by definition, $\vec x, \vec y \in \spanof{\vec v,\vec w}$, and furthermore we have:
+    \begin{align}
+      \vec v &= \frac{1}{2i}\paren{i\vec x + \vec y} \\
+      \vec w &= \frac{1}{2i}\paren{i\vec x - \vec y} \\
+    \end{align}
+  Thus $\vec w, \vec w \in \spanof{\vec v,\vec w}$. Applying Gram-Schmidt allows us to turn $\setof{\vec x, \vec y}$
+  into a real orthonormal basis of $\spanof{\vec v, \vec w}$. Doing this for every conjugate pair of non-real $\vec v_i \in B$
+  gives us a new, real orthonormal basis $B'$ such that:
+  $$[A]_{b'} = \pmatr{
+    (2\times 2) & 0 & \ldots & 0 \\
+    0 & (2 \times 2) & \ldots & 0 \\
+    \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & \ldots & (1\times 1)
+  }$$
+  where each block is also orthogonal matrix.
+\end{proof}
+\begin{remark}
+  This means that any orthogonal transformation $T$, when viewed under the right basis,
+  is a collection of pairwise orthogonal rotations ($2 \times 2$ blocks) together with some fixed and reflected lines ($\pm1$ eigenvalues).
+\end{remark}
+\begin{thmexample}
+  In $\R^3$, an orthogonal matrix $A$ may look like:
+  $$A = \bmatr{
+    \cos \frac{\pi}3 & -\sin \frac{\pi}3 & 0 \\
+    \sin \frac{\pi}3 &  \cos \frac{\pi}3 & 0 \\
+    0                &  0                & 1
+  }$$
+\end{thmexample}
+
+\section{Rigid Motions}
+\begin{definition}
+  A \emph{rigid motion} is a function $f : \R^n \to \R^n$ such that
+    $$\norm{\vec x - \vec y} = \norm{f(\vec x) - f(\vec y)} \text{ for all } \vec x, \vec y \in \R^n$$
+  That is, $f$ preserves distances.
+\end{definition}
+\begin{defexample}
+  A translation $\setof{ \vec x \mapsto \vec x + \vec a }$ is a \emph{rigid motion}
+\end{defexample}
+\begin{defexample}
+  An orthogonal linear transformation is a \emph{rigid motion}
+\end{defexample}
+
+\begin{theorem}
+  Any \emph{rigid motion} $f : \R^n \to \R^n$ can be written uniquely as
+    $$f = g \circ T$$
+  where $g$ is a translation and $T$ is an orthogonal linear transformation
+\end{theorem}
+\begin{proof}
+  Define $T : \R^n \to \R^n$ by
+    $$T(\vec x) = f(\vec x) - f(\vec 0)$$
+  $T$ is clearly a \emph{rigid motion}, and $T(\vec 0) = f(\vec 0) - f(\vec 0) = \vec 0$.
+  Also $f = g \circ T$ where $g$ is the translation $g(\vec x) = \vec x + f(\vec 0)$.
+  We will prove that $T$ is linear.
+  First observe that, for any $\vec x \in \R^n$
+    $$\norm{T \vec x} = \norm{T \vec x - T \vec 0} = \norm{\vec x - \vec 0} = \norm{\vec x}$$
+  Next we will show that, for any $\vec x, \vec y \in \R^n$
+    $$\inp{T\vec x}{T\vec y} = \inp{\vec x}{\vec y}$$
+  this is true because
+    \begin{align}
+      \norm{T\vec x - T\vec y}^2 
+        &= \inp{T\vec x - T\vec y}{T \vec x - T \vec y} \\
+        &= \inp{T \vec x}{T \vec x} - \inp{T \vec x}{T \vec y} - \inp{T \vec y}{T \vec x} + \inp{T\vec y}{T \vec y} \\
+        &= \norm{T\vec x}^2 + \norm{T \vec y}^2 - 2\inp{T \vec x}{T \vec y}
+        &= \norm{\vec x}^2 + \norm{\vec y}^2 - 2\inp{T \vec x}{T \vec y}
+    \end{align}
+  but also
+    \begin{align}
+      \norm{T \vec x - T\vec y}^2
+        &= \norm{\vec x - \vec y}^2 \\
+        &= \norm{\vec x}^2 + \norm{\vec y}^2 - 2\inp{\vec x}{T \vec y}
+    \end{align}
+  subtracting these two equations from each other we obtain
+    $$\inp{T \vec x}{T \vec y} = \inp{\vec x}{\vec y}$$
+  Using this fact we can show the two properties of linearity:
+  \begin{enumerate}[i.]
+    \item For any $a \in \R$, $\vec x \in \R^n$:
+      \begin{align}
+        \norm{T(a \vec x) - aT(\vec x)}^2
+          &= \norm{T(a\vec x)}^2 + \norm{aT(\vec x)}^2 - 2\inp{T(a \vec x)}{aT(\vec x)} \\
+          &= \norm{a\vec x}^2 + a^2\norm{\vec x}^2 - 2a\inp{a \vec x}{\vec x} \\
+          &= 2a^2\norm{\vec x}^2 - 2a^2\norm{\vec x}^2 = 0
+      \end{align}
+      Thus, by positive definiteness of the norm $T(a\vec x) = aT(\vec x)$.
+
+    \item For any $\vec x, \vec y \in \R^n$:
+      \begin{align}
+        \norm{T(\vec x + \vec y) - T(\vec x) - T(\vec y)}^2
+          &= \norm{T(\vec x + \vec y)}^2 + \norm{T(\vec x)}^2 + \norm{T(\vec y)}^2 \\
+          &\phantom{=} - 2\inp{T(\vec x + \vec y)}{T(\vec x)} - 2\inp{T(\vec x + \vec y)}{T(\vec y)} \notag \\
+          &\phantom{=} + 2\inp{T(\vec x)}{T(\vec y)} \notag \\
+          &= \norm{\vec x + \vec y}^2 + \norm{\vec x}^2 + \norm{\vec y}^2 \\
+          &\phantom{=} -2\inp{\vec x + \vec y}{\vec x} - 2\inp{\vec x + \vec y}{\vec y} + 2\inp{\vec x}{\vec y} \notag \\
+          &= \norm{\vec x}^2 + \norm{\vec y}^2 + 2\inp{\vec x}{\vec y} -\norm{\vec x + \vec y}^2 = 0
+      \end{align}
+      Thus, by positive definiteness of the norm $T(\vec x + \vec y) = T(\vec x) + T(\vec y)$.
+  \end{enumerate}
+  Thus $T$ is a linear \emph{rigid motion}, so $T$ is orthogonal. It remains only to be shown that $f = g \circ T$ is unique.
+  Suppose $f = g' \circ T'$ for a translation $g'$ and orthogonal transformation $T'$, then:
+    \begin{align}
+      f(\vec 0) &= (g' \circ T') \vec 0 = g'(\vec 0) \\
+                &= (g \circ T) \vec 0 = g(\vec 0)
+    \end{align}
+  Thus $g(\vec x) = g'(\vec x) = \vec x + f(\vec 0)$. But then
+    $$T'\vec x = \paren{g^{-1} \circ f}\vec x = f(\vec x) - f(\vec 0) = T\vec x$$
+  so $g' = g$ and $T' = T$ as required for uniqueness.
+\end{proof}
