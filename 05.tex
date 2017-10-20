@@ -1,0 +1,413 @@
+\chapter{October 6 - October 18}
+
+\section{Quadratic Forms}
+
+\begin{definition}[Forms]
+  A \emph{form} or \emph{homogenous polynomial} is a polynomial where every term has the same degree
+\end{definition}
+
+\begin{definition}[Quadratic Form]
+  A \emph{quadratic form} is a \emph{homogeneous polynomial} of degree 2
+\end{definition}
+
+\begin{remark}
+  A \emph{quadratic form} in 2 variables over $\F$ is a polynomial of the form:
+    \begin{align}
+      &ax^2 + bxy + cy^2 & \text{for some }& a, b, c \in \F
+    \end{align}
+\end{remark}
+
+\begin{remark}
+  Any \emph{quadratic form} over $\F \in \setof{\C, \R}$ can be expressed as a symmetric matrix:
+    \begin{align}
+      &\pmatr{x & y} \bmatr{a & \frac{b}{2} \\ \frac{b}{2} & d} \pmatr{x \\ y}
+      & \text{for some }& a, b, c \in \F
+    \end{align}
+  Indeed, expanding this expression we see:
+    \begin{align}
+      \pmatr{x & y} \bmatr{a & \frac{b}{2} \\ \frac{b}{2} & d} \pmatr{x \\ y}
+        &= \pmatr{ax + \frac{b}{2}y & \frac{b}{2}x + cy}\pmatr{x \\ y} \\
+        &= ax^2 + \frac{b}{2}yx + \frac{b}{2}xy + cy^2 \\
+        &= ax^2 + bxy + cy^2
+    \end{align}
+\end{remark}
+
+\begin{definition}[Plane Curve]
+  A \emph{plane curve} for a \emph{quadratic} form is a set in $\R^2$ given by
+    \begin{align}
+      ax^2 + bxy + cy^2&=d & \text{for some }& a, b, c, d \in \R
+    \end{align}
+\end{definition}
+\begin{remark}[Author's Note]
+  In class we defined a quadratic form to be exactly that set, but really a quadratic form refers to the polynomial itself,
+  the set of solutions is a plane curve.
+\end{remark}
+
+\begin{remark}
+  Consider the plane curve for \emph{quadratic form} over $\R$ with an associated symmetric matrix $A$,
+  and let $P$ be an orthogonal change of basis matrix. Then under our new basis
+    \begin{align}
+      \pmatr{x \\ y} \mapsto & P\pmatr{x \\ y}
+      \pmatr{x & y} \mapsto & \transpose{\bmatr{P\pmatr{x \\ y}}} \\
+                      & & = & \pmatr{x & y}\transpose{P} \\
+                      & & = & \pmatr{x & y}P^* & \text{since }& P \in \R^{2\times2} \\
+                      & & = & \pmatr{x & y}P^{-1} & \text{since }& PP^* = I = P^*P
+    \end{align}
+  so, under our new basis we see
+    \begin{align}
+      \pmatr{x & y}A\pmatr{x \\ y}
+        &\mapsto \pmatr{x & y}P^{-1}AP\pmatr{x \\ y} \\
+      \transpose{\paren{P^{-1}AP}}
+        &= \transpose{P}\transpose{A}\transpose{\paren{P^{-1}}} \\
+        &= P^{-1}A\transpose{\paren{\transpose P}} \\
+        &= P^{-1}AP
+    \end{align}
+  that is $P$ changes our symmetric matrix $A$ into a similar matrix.
+
+  Since $A$ is symmetric and is a matrix over $\R$, it is self-adjoint,
+    so we can choose an orthonormal basis $B$ of $\R^2$ so that $[A]_B$ is diagonal.
+
+  Then if $P$ represents the change of coordinates from $B$ to the standard basis,
+    $P^{-1}AP$ is diagonal, so the plane curve for its associated quadratic form is of the form
+    \begin{align}
+      Ax^2 + Cy^2&=D & \text{for some }& A,C,D \in \R
+    \end{align}
+  and these are readily understood to be be:
+    \begin{itemize}
+      \item an {\bf ellipse} if $A, C, D$ all have the same sign
+      \item a {\bf hyperbola} if $A, C$ have different signs
+      \item {\bf degenerate} if $ACD = 0$ or if $A,C$ have the same sign and $D$ the opposite
+    \end{itemize}
+  Furthermore, we can choose $P$ to be a rotation $P = \bmatr{ \vec v_1 & \vec v_2 }$ where $\vec v_1$, $\vec v_w$ are the eigenvectors of $A$.
+  If $P$ is not a rotation, then the determinant is negative, so consider the matrix $P' = \bmatr{\vec v_1 & -\vec v_2}$
+  which also orthogonally diagonalizes $A$ where $\det P' = -\det P > 0$, making $P'$ a rotation.
+\end{remark}
+
+\begin{defexample}
+  Consider the plane curve for a quadratic form given by:
+    $$3x^2 + 2xy - y^2 = 14$$
+  then the quadratic form has an associated symmetric matrix $A$ given by:
+    \begin{align}
+      A &= \bmatr{3 & 1 \\ 1 & -1}
+    \end{align}
+  to diagonalize, we determine the eigenvalues of $A$
+    \begin{align}
+      \det\paren{A - \lambda I}
+        &= \det \vmatr{3-\lambda & 1 \\ 1 & -1-\lambda} \\
+        &= \lambda^2 - 2\lambda - 4 \\
+      \lambda &= \frac{2 \pm \sqrt{4+16}}{2} = 1 \pm \sqrt{5}
+    \end{align}
+  and using these eigenvalues we determine the eigenvectors of $A$
+    \begin{align}
+      \paren{A-(1+\sqrt5)I}\vec v_1 &= 0 & \paren{A-(1-\sqrt5)I}\vec v_2 &= 0 \\
+      \bmatr{2 - \sqrt 5 & 1 \\ 1 & -2-\sqrt5}\vec v_1 &= 0 & \bmatr{2 + \sqrt 5 & 1 \\ 1 & -2+\sqrt5}\vec v_1 &= 0
+    \end{align}
+  row reduction (or just inspection in this case) yields eigenvectors
+    \begin{align}
+      \vec v_1 &= \pmatr{1 \\ -2 + \sqrt5} & \vec v_2 &= \pmatr{1 \\ -2-\sqrt5}
+    \end{align}
+  We gave up in class some time around here because it turns out normalizing these vectors is gross.
+  But pretty much you normalize, take $P = \bmatr{\vec v_1 & \vec v_2}$, then $P^{-1} A P$ becomes diagonal where $P^{-1} = \transpose P$.
+\end{defexample}
+
+\section{Projections}
+
+\begin{definition}[Projection]
+  A \emph{projection} (not to be confused with an \emph{orthogonal projection}) is any linear transformation
+  $T : V \to V$ satisfying
+    $$T = T^2$$
+  We call $T$ the projection of $V$ onto $\im T$ along $\ker T$.
+\end{definition}
+\begin{defexample}[Non-Orthogonal Projection]
+  Let $T : \R^2 \to \R^2$ be given by $T(x,y) = (x-y,0)$. Then $T$ is not an \emph{orthogonal projection}, but it is a \emph{projection}. Indeed:
+    $$T^2(x,y) = T(x-y,0) = (x-y,0) = T(x,y)$$
+\end{defexample}
+\begin{remark}[Restriction of $T$ onto $\im T$]
+  If $T : V \to V$ is a projection then $T\big\rvert_{\im T} = id\big\rvert_{\im T}$.
+  Indeed for any $\vec v \in \im T$, we must have $\vec v = T\vec w$ for some $\vec w \in V$ and
+    $$T\vec v = T(T\vec w) = T^2\vec w = T\vec w = \vec v$$
+\end{remark}
+
+\begin{theorem}[Orthogonal Projections are Projections]
+  Let $W$ be a subspace of $V$, then $\proj[W]{\cdot} : V \to V$ is a \emph{projection} (under the natural injection into $V$, technically $\proj[W]{\cdot} : V \to W$).
+\end{theorem}
+\begin{proof}
+  Recall that we have $W \oplus W^\perp \simeq V$ under a bijective map $(w, w') \mapsto w + w'$. Thus for any $\vec v \in W$ consider the corresponding $(\vec w, \vec w') \in W \oplus W^\perp$
+  \begin{align}
+    \proj[W]{\proj[W]{\vec v}}
+      &= \proj[W]{\proj[W]{\vec w + \vec w'}} \\
+      &= \proj[W]{\vec w} \\
+      &= \proj[W]{\vec w + \vec w'} \\
+      &= \proj[W]{\vec v}
+  \end{align}
+  so $\proj[W]{\cdot}^2 = \proj[W]{\cdot}$
+\end{proof}
+
+\begin{theorem}
+  A \emph{projection} $T : V \to V$ is an \emph{orthogonal projection} if and only if $\paren{\im T}^\perp = \ker T$
+\end{theorem}
+\begin{proof}
+  \begin{itemize}
+    \item[$\implies$] Suppose $T$ is an orthogonal projection $T = \proj[W]{\cdot} : V \to V$.
+      Then $\ker T = W^\perp$ and $\im T = W$ by definition, so $\ker T = \paren{\im T}^\perp$
+    \item[$\impliedby$] Let $W = \im T$, then $\ker T = W^\perp$.
+      Then $T$ and $\proj[W]{\cdot}$ agree on both $W$ and $W^\perp$, so $T = \proj[W]{\cdot}$.
+  \end{itemize}
+\end{proof}
+
+\begin{theorem}
+  A \emph{projection} $T : V \to V$ is an \emph{orthogonal projection} if and only if $T = T^*$
+\end{theorem}
+\begin{proof}
+  \begin{itemize}
+    \item[$\implies$] Let $\setof{\vec v_1,\ldots,\vec v_r}$ be an orthonormal basis of $\im T$,
+      then we can extend it to a basis $B = \setof{\vec v_1,\ldots,\vec v_n}$ of $V$. Then:
+        \begin{align}
+          T\vec v_i &= \begin{cases}
+            \vec v_i & 1 \le i \le r \\
+            0 & r < i \le n
+          \end{cases}
+        \end{align}
+      which gives us a matrix for $[T]_B$ of the form:
+        \begin{align}
+          [T]_B &= \bmatr{
+            1 & 0 & \cdots & 0 & 0 & \cdots & 0 \\
+            0 & 1 & \cdots & 0 & 0 & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \vdots & \vdots & & \vdots \\
+            0 & 0 & \cdots & 1 & 0 & \cdots & 0 \\
+            0 & 0 & \cdots & 0 & 0 & \cdots & 0 \\
+            \vdots & \vdots &  & \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & 0 & 0 & \cdots & 0
+          }
+        \end{align}
+      thus $[T]_B^* = [T]_B$, so since $B$ is orthonormal, $T = T^*$
+    \item[$\impliedby$] Suppose $T = T^*$ and $T$ is a projection.
+
+      Then $T$ is self-adjoint so there exists some basis $B$ such that $[T]_B$ is diagonal.
+      The diagonal entries of $[T]_B$ are the eigenvalues of $T$.
+
+      So let $\lambda$ be an eigenvalue of $T$ and $\vec v$ be a $\lambda-$eigenvector. Since $T$ is a projection:
+        \begin{align}
+          \lambda\vec v &= T\vec v = T^2\vec v = \lambda^2\vec v
+        \end{align}
+      so $\lambda \in \setof{0, 1}$. Since $B$ is an eigenbasis of $T$, by reordering $B$ we may assume that
+      $B = \setof{\vec v_1,\ldots,\vec v_n}$ such that
+        \begin{align}
+          \vec v_1,\ldots,\vec v_r &\in \im T      & \text{ since } T\vec v_i &= \vec v_i \\
+          \vec v_{r+1},\ldots,\vec v_n &\in \ker T & \text{ since } T\vec v_i &= 0
+        \end{align}
+
+      Thus $T$ and $\proj[\spanof{\vec v_1,\ldots,\vec v_r}]{\cdot}$ agree on $B$, which is a basis for $V$ so
+        \begin{align}
+          T &= \proj[\spanof{\vec v_1,\ldots,\vec v_r}]{\cdot}
+          \end{align}
+  \end{itemize}
+\end{proof}
+
+\section{Spectral Theorem}
+\begin{theorem}[Spectral Theorem]
+  Let $T : V \to V$ be a linear transformation with an orthonormal $B$ of $V$
+  such that $[T]_B$ is diagonal.
+
+  Then let $\lambda_1,\ldots,\lambda_k$ be the eigenvalues of $T$, defining
+    $$W_i = \lambda_i\text{-eigenspace of }T$$
+
+  Then define $T_i : V \to W_i$ to be the orthogonal projection of $V$ onto $W_i$, then:
+  \begin{enumerate}[(1)]
+    \item $V \simeq W_1 \oplus \cdots \oplus W_K$ as an inner product space
+    \item $T_i \circ T_j = \delta_{i,j}T_i$ where $\delta_{i,j}$ is the Kronecker delta:
+      $$\delta_{i,j} = \begin{cases}
+        0 & i \ne j \\
+        1 & i = j
+      \end{cases}$$
+    \item $T_1 + \cdots + T_k = I$
+    \item $T = \lambda_1T_1 + \cdots \lambda_k T_k$
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  We will prove these properties in a coordinate free style, but intuitively they hold because we can
+  reorder $B$ so that the $\lambda_1$-eigenvectors come first, followed by $\lambda_2$-eigenvectors, and so on, giving:
+    \begin{align}
+      [T]_B = \bmatr{
+        \lambda_1 & \cdots & 0 & 0 & \cdots & 0 \\
+        \vdots & \ddots & \vdots & \vdots & & \vdots \\
+        0 & \cdots & \lambda_1 & 0 & \cdots & 0 \\
+        0 & \cdots & 0 & \lambda_2 & \cdots & 0 \\
+        \vdots &  & \vdots & \vdots & \ddots & \vdots \\
+        0 & \cdots & 0 & 0 & \cdots & \lambda_k
+      }
+    \end{align}
+  Also observe before proceeding that for any $W_i, W_j$ with $i \ne j$ we have $W_i \subset W_j^\perp$
+  since $W_i$ and $W_j$ draw their bases from disjoint subsets of an orthonormal basis.
+  \begin{enumerate}[(1)]
+    \item Define $\phi : W_1 \oplus \cdots \oplus W_k \to V$ by
+        \begin{align}
+          \phi(\vec w_1,\ldots,\vec w_k) &= \vec w_1 + \cdots + \vec w_k
+        \end{align}
+      Then we have $\ker \phi = (0)$ since eigenvectors with different eigenvalues are linearly independent,
+      and $\im \phi = V$ because $V$ admits a basis of eigenvectors of $T$. Since $\phi$ is injective, surjective,
+      and linear, $\phi$ is an isomorphism.
+
+      To check that $\phi$ respects inner products, consider for arbitrary points $(\vec w_1,\ldots,\vec w_k)$ and
+      $(\vec w_1',\ldots,\vec w_k') \in W_1 \oplus \cdots \oplus W_k$
+        \begin{align}
+          \inp{(\vec w_1,\ldots,\vec w_k)}{(\vec w_1',\ldots,\vec w_k')}
+            &= \inp{\vec w_1}{\vec w_1'} + \cdots + \inp{\vec w_k}{\vec w_k'} \\
+            &= \sum_{i=1}^k\inp{\vec w_i}{\vec w_i'} \\
+            &= \sum_{i=1}^k\sum_{j=1}^k\inp{\vec w_i}{\vec w_j'} \text{ since } \inp{\vec w_i}{\vec w_j} = 0 \text{ if } i \ne j\\
+            &= \inp{\vec w_1 + \cdots + \vec w_k}{\vec w_1' + \cdots + \vec w_k'}\\
+            &= \inp{\phi(\vec w_1,\ldots,\vec w_k)}{\phi(\vec w_1',\ldots,\vec w_k')}
+        \end{align}
+
+    \item If $i \ne j$ then $W_i \subset W_j^\perp = \ker T_j$ and $W_i = \im T_i$, so $T_j \circ T_i = 0$
+
+      Otherwise, if $i = j$ then $T_j \circ T_i = T_i^2 = T$ by definition of a projection
+
+    \item Let $B = \setof{\vec v_1, \ldots, \vec v_n}$. Then for any $\vec v \in V$ we have:
+      \begin{align}
+        \vec v &= a_1\vec v_1 + \cdots + a_n\vec v_n \\
+        T_i \vec v &= \sum_{j : \vec v_j \in W_j} a_j\vec v_j \\
+        \sum_{i=1}^k T_i \vec v &= a_1 \vec v_1 + \cdots + a_n \vec v_n = \vec v
+      \end{align}
+
+    \item For any $\lambda_i$-eigenvector, $\vec v_j \in B$, since $\vec v_j = T_i\vec v_j$ and $T_\ell \vec v_j = (T_\ell \circ T_i) \vec v_j = \delta_{\ell,j}\vec v_j$
+      \begin{align}
+        T\vec v_j &= \lambda_i\vec v_j \\
+          &= \lambda_iT_i\vec v_j \\
+          &= \lambda_1T_1 \vec v_j + \cdots + \lambda_k T_k \vec v_j
+      \end{align}
+      So $T$ and $\lambda_1T_1 + \cdots \lambda_kT_k$ agree on the basis $B$, and are thus equal
+  \end{enumerate}
+\end{proof}
+
+\begin{remark}[Motivation for the Spectral Theorem]
+  Consider the vector space $V = C^\infty(0,1) \subset \setof{ f : [0,1] \to \R }$
+  of infinitely differentiable functions such that $f^{(n)}(0) = f^{(n)}(1)$ for every derivative.
+  We will wave our hands here and ignore the fact that $V$ is not finite-dimensional and we haven't proven our theorems in infinite dimensions.
+
+  Consider the $L_2$ inner product $\inp{f}{g} = \int_0^1fg$ and recall that $T : V \to V$ given by $T f = f'$ is well defined since differentiation is a linear operator.
+  Then for any $f, g \in V$:
+    $$\inp{Tf}{g} = \int_0^1f'g = fg\big\rvert_0^1 - \int_0^1fg' = \int_0^1fg' = \inp{g}{-Tg}$$
+  Thus $T^* = -T$, so $(T^2)^* = (T^*)^2 = T^2$ meaning $T^2 = \setof{ f \mapsto f'' }$ is self-adjoint.
+  Thus $T$ is orthogonally diagonalizable by an eigenbasis. In particular, the eigenvectors of $T^2$ are of the form:
+    $$f(x) = \sin \paren{\lambda x} \text{ for some } \lambda \in \R$$
+  Decomposing a function into a combination of $\sin$ functions is called \emph{spectral analysis}.
+\end{remark}
+
+\begin{lemma}[Determinant of Vandermonde Matrix]
+  Let $A$ be a Vandermonde matrix, that is $A$ is of the form:
+    $$A = \bmatr{
+      1 & \alpha_1 & \ldots & \alpha_1^{n-1} \\
+      1 & \alpha_2 & \ldots & \alpha_2^{n-1} \\
+      \vdots & \vdots & \ddots & \vdots \\ 
+      1 & \alpha_m & \ldots & \alpha_m^{n-1}
+    }$$
+  then the determinant of $A$ is given by:
+    $$\det A = \pm \prod_{i < j}(\alpha_i - \alpha_j)$$
+\end{lemma}
+No proof given in this course because it's neither easy nor particularly relevant. Not too hard to find one online if you care.
+
+\begin{theorem}[Lagrange Interpolation]
+  Let $a_1,\ldots,a_n$ be distinct elements of a field $\F$, and let $b_1,\ldots,b_n$ be any elements of $\F$ (not necessarily distinct).
+
+  Then there is a polynomial $g(x)$ of degree at most $n-1$ satisfying $g(a_i) = b_i$ for all $1 \le i \le n$
+\end{theorem}
+\begin{proof}
+  Let $V$ be the vector space of polynomials in $x$ with coefficients in $\F$ of degree at most $n-1$.
+
+  Let $p(x) = c_0 + c_1x + \cdots + c_nx^{n-1}$ be a general element of $V$,
+  then $p(a_i) = b_i$ if and only if $c_0 + c_1a_i + \cdots + c_{n-1}a_i^{n-1} = b_i$,
+  which is a linear equation in $c_i$.
+
+  Thus the system $\setof{ g(a_i) = b_i }$ is a linear system in the coefficients $c_i$:
+    $$\left\{
+      \begin{array}{c c c c c c c c l}
+        c_0 & + & c_1a_1 & + & \cdots & + & c_{n-1}a_1^{n-1} & = & b_1 \\
+        c_0 & + & c_1a_2 & + & \cdots & + & c_{n-1}a_2^{n-1} & = & b_2 \\
+        \vdots & & \vdots & & & & \vdots & & \vdots \\
+        c_0 & + & c_1a_n & + & \cdots & + & c_{n-1}a_n^{n-1} & = & b_n
+      \end{array}
+      \right.$$
+  Note that the corresponding matrix $A$ given by
+    $$A = \bmatr{
+      1 & a_1 & \cdots & a_1^{n-1} \\
+      1 & a_2 & \cdots & a_2^{n-1} \\
+      \vdots & \vdots & \ddots & \vdots \\
+      1 & a_n & \cdots & a_n^{n-1}
+    }$$
+  is a Vandermonde matrix, so $\det A = \pm \prod\limits_{i < j}(a_i -a_j)$, but $a_i$ are all distinct.
+
+  Thus $\det A \ne 0$ so the system is consistent and has a solution $(c_0, \ldots, c_{n-1})$
+  with corresponding polynomial $p$ satisfies $p(a_i) = b_i$ for all $1 \le i \le n$.
+\end{proof}
+
+\begin{theorem}
+  Let $T : V \to V$ be a complex linear transformation. Then $T$ is normal
+  if and only if $T^* = g(T)$ for some polynomial $g(x) \in \C[x]$
+\end{theorem}
+\begin{proof}
+  \begin{itemize}
+    \item[$\implies$] Assume $T^*T = TT^*$, then $T$ is normal in a complex inner product space
+      so $T$ is orthogonally diagonalizable. So we can write the spectral decomposition of $T$:
+        \begin{align}
+          T &= \lambda_1T_1 + \cdots + \lambda_kT_k \\
+          T^* &= \conj{\lambda_1}T_1 + \cdots + \conj{\lambda_k}T_k
+        \end{align}
+      By Lagrange Interpolation there is a polynomial $g \in \C[x]$ satisfying $g(\lambda_i) = \conj{\lambda_i}$ for all $i$. Then
+        \begin{align}
+          g(T) &= g(\lambda_1T_1 + \cdots + \lambda_kT_k) \\
+               &= g(\lambda_1)T_1 + \cdots + g(\lambda_k)T_k \text{ since } T_iT_j = \delta_{i,j} \text{ and } T_i^n = T_i \\
+               &= \conj{\lambda_1} T_1 + \cdots + \conj{\lambda_k} T_k = T^*
+        \end{align}
+    \item[$\impliedby$] This is immediate from the fact that $T$ commutes with $g(T)$ for any $g \in \C[x]$.
+      Indeed, for each term $a_iT^i$ we have
+        $$a_iT^iT = a_iT^{i+1} = aTT^{i} = T(aT^i)$$
+  \end{itemize}
+\end{proof}
+
+\begin{theorem}
+  Let $T : V \to V$ be a complex linear transformation. Then $T$ is unitary if and only if
+  $T$ is normal and all the eigenvalues of $T$ have length 1
+\end{theorem}
+\begin{proof}
+  Recall that we have already shown earlier that if $T$ is unitary it is normal with eigenvalues all having length 1.
+
+  Suppose then that $T$ is normal and all eigenvalues have length 1. Since it is normal in a complex inner product space
+  it is orthogonally diagonalizable. SO we can write the spectral decomposition of $T$:
+    \begin{align}
+      T &= \lambda_1 T_1 + \cdots + \lambda_kT_k \\
+      T^* &= \conj{\lambda_1}T_1 + \cdots + \conj{\lambda_k}T_k \\
+          &= \lambda_1^{-1}T_1 + \cdots + \lambda_k^{-1}T_k \\
+          &= T^{-1}
+    \end{align}
+  Thus $TT^* = I = T^*T$ so $T$ is unitary
+\end{proof}
+
+\begin{theorem}
+  Let $T$ be a normal linear transformation. Then $T = T^*$ if and only if
+  every root of the characteristic polynomial of $T$ is real.
+\end{theorem}
+\begin{proof}
+  Recall that we have already shown that if $T$ is self-adjoint then every root of the characteristic polynomial of $T$ is real.
+
+  Suppose then that every root of the characteristic polynomial of $T$ is real.
+  Then $T$ is orthogonally diagonalizable so we can write its spectral decomposition:
+    \begin{align}
+      T &= \lambda_1T_1 + \cdots + \lambda_kT_k \\
+      T^* &= \conj{\lambda_1}T_1 + \cdots + \conj{\lambda_k}T_k \\
+          &= \lambda_1T_1 + \cdots + \lambda_kT_k = T
+    \end{align}
+\end{proof}
+
+\begin{remark}
+  Let $T$ be an orthogonally diagonalizable transformation with spectral decomposition
+    \begin{align}
+      T &= \lambda_1T_1 + \cdots + \lambda_kT_k
+    \end{align}
+  then $T_i$ is a polynomial in $T$. Indeed, choose $g_i(x)$ such that $g_i(\lambda_i) = \delta_{i,j}$, then
+    \begin{align}
+      g_i(T) &= g_i(\lambda_1T_1 + \cdots + \lambda_kT_k) \\
+             &= g_i(\lambda_1)T_1 + \cdots + g_i(\lambda_k)T_k \\
+             &= T_i
+    \end{align}
+\end{remark}
