@@ -1,0 +1,285 @@
+\chapter{October 20 - October 25}
+
+\section{Singular Values}
+
+\begin{remark}
+  Let $T : V \to W$ be a linear transformation from inner product spaces $V$ to $W$.
+  Then let $B_V$, $B_W$ be orthonormal bases for $V$ and $W$ respectively, then we can define an adjoint $T^* : W \to V$ by
+    \begin{align}
+      [T^*]_{B_W \to B_V} &= [T]_{B_V \to B_W}^*
+    \end{align}
+\end{remark}
+
+\begin{lemma}\label{ustarueigenvalues}
+  For any linear transformation $\sU : V \to W$, any eigenvalues of $\sU^*\sU$ are non-negative real numbers.
+\end{lemma}
+\begin{proof}
+  Let $\sU^*\sU\vec v = \lambda\vec v$, then:
+    \begin{align}
+      \inp{\sU^*\sU \vec v}{\vec v} &= \lambda\norm{\vec v}^2 \\
+      \inp{\sU^*\sU \vec v}{\vec v} &= \inp{\sU v}{\sU \vec v} \\
+        &= \norm{\sU\vec v}^2
+    \end{align}
+  However note that $\sU\vec v = \sigma \vec v$ where $\abs{\sigma}^2 = \lambda$, thus
+    \begin{align}
+      \lambda\norm{\vec v} &= \norm{\sU \vec v}^2 = \abs{\sigma}^2\norm{\vec v}^2 = \abs{\lambda}\norm{\vec v}
+    \end{align}
+  Since this holds for any eigenvector $\vec v$, we must have $\lambda = \abs{\lambda}$ so $\lambda \in \R_{\ge 0}$.
+\end{proof}
+
+\begin{theorem}
+  Let $T : V \to W$ be a linear transformation from inner product spaces $V$ to $W$.
+  Then there exist orthonormal bases
+    \begin{align}
+      B_V &= \setof{\vec v_1,\ldots,\vec v_n} & \text{ for }& V \\
+      B_W &= \setof{\vec w_1,\ldots,\vec w_m} & \text{ for }& W
+    \end{align}
+  and $\sigma_1\ge\sigma_2\ge \cdots \ge \sigma_k$, $\sigma_i \in \R_{\ge 0}$ for $k = \min\setof{n,m}$ such that
+    \begin{align}
+      T(\vec v_i) &= \begin{cases}
+        \sigma_i \vec w_i & 1 \le i \le k \\
+        \vec 0            & i > k
+      \end{cases}
+    \end{align}
+  Moreover, $\vec v_i$ is an eigenvector of $T^*T$ with eigenvalues $\sigma_i^2$ (or 0 if $i > k$)
+\end{theorem}
+\begin{proof}
+  Note that $T^*T : V \to V$ and $(T^*T)^* = T^*T$. So $T^*T$ is self-adjoint so there exists an orthonormal basis $B_V = \setof{\vec v_1,\ldots,\vec v_n}$
+  of eigenvectors. By \ref{ustarueigenvalues} we know that the eigenvalues must be positive real numbers. So let us order them
+    \begin{align}
+      \lambda_1 \ge \lambda_2 \ge \cdots \ge \lambda_n &\ge 0
+    \end{align}
+  where $\lambda_i$ is the eigenvalue for $\vec v_i$. Then define $\sigma_i = \sqrt{\lambda_i}$ and define
+    \begin{align}
+      \vec w_i &= \frac{1}{\sigma_i}T\vec v & \text{ if }& \sigma_i \ne 0
+    \end{align}
+  then extend $\setof{\vec w_1,\ldots,\vec w_r}$ to an orthonormal basis
+    \begin{align}
+      B_W &= \setof{ \vec w_1,\ldots,\vec w_m } & \text{ for }& W
+    \end{align}
+  where $r$ happens to be the rank of $T$. We can do this because $\setof{\vec w_1,\ldots,\vec w_r}$ is orthonormal. Indeed
+    \begin{align}
+      \inp{\vec w_i}{\vec w_j}
+        &= \inp{\frac1{\sigma_i}T\vec v_i}{\frac1{\sigma_j}T\vec v_j} \\
+        &= \frac{1}{\sigma_i\sigma_j}\inp{T\vec v_i}{T\vec v_j} \\
+        &= \frac{1}{\sigma_i\sigma_j}\inp{\vec v_i}{T^*T\vec v_i\vec v_j} \\
+        &= \frac{\sigma_j^2}{\sigma_i\sigma_j}\inp{\vec v_i}{\vec v_j} \\
+        &= \delta_{i,j}
+    \end{align}
+\end{proof}
+
+\begin{definition}[Singular Values]
+  We call these $\sigma_1,\ldots,\sigma_k$ the \emph{singular values} of $T$.
+\end{definition}
+
+\begin{remark}[Uniqueness of Singular Values]
+  If $\setof{\vec v_1,\ldots,\vec v_n}$ and $\setof{\vec w_1,\ldots,\vec w_m}$ are orthonormal bases of $V$ and $W$ satisfying
+    \begin{align}
+      T(\vec v_i) &= \begin{cases}
+        \sigma_i\vec w_i & 1 \le i \le k \\
+        0 & i > k
+      \end{cases}
+    \end{align}
+  with $\sigma_1 \ge \sigma_2 \ge \cdots \ge \sigma_k \ge 0$, then each $\vec v_i$ must necessarily be an eigenvalue of $T^*T$ with eigenvalue $\sigma_i^2$.
+\end{remark}
+\begin{proof}
+  For all $i,j$ we get
+    \begin{align}
+      \inp{T^*\vec w_i}{\vec v_j}
+        &= \inp{\vec w_i}{T\vec v_j} \\
+        &= \begin{cases}
+          \sigma_i & 1 \le i \le k, i = j \\
+          0 & otherwise
+        \end{cases}
+    \end{align}
+  So if $i \le k$ we get
+    \begin{align}
+      T^*T \vec v_i &= T^*(\sigma_i\vec v_i) \\
+        &= \sigma_iT^*\vec w_i \\
+        &= \sigma_i^2\vec v_i
+    \end{align}
+  And similarly if $k < i$ we must have $T^*T \vec v_i = 0$
+\end{proof}
+
+\begin{remark}[Singular Values of Adjoint]
+  By construction, the \emph{singular values} of $T$ are the same as the \emph{singular values} of $T^*$
+\end{remark}
+
+\section{Singular Value Decomposition}
+
+\begin{definition}[Singular Value Decomposition]
+  Given $T : V \to W$, let $B_V = \setof{\vec v_1,\ldots,\vec v_n}$ and $B_W = \setof{\vec w_1,\ldots,\vec w_m}$
+  be orthonormal bases for $V$ and $W$ respectively such that
+    \begin{align}
+      T(\vec v_i) &= \begin{cases}
+        \sigma_i\vec w_i & 1 \le i \le k \\
+        0 & k < i
+      \end{cases}
+    \end{align}
+  where $k = \min(m,n)$ and $\sigma_i^2$ are the eigenvalues of $T^*T$. Then we have
+    \begin{align}
+      \Sigma = [T]_{B_V \to B_W} &= \bmatr{
+        \sigma_1 & 0 & \cdots & 0 \\
+        0 & \sigma_2 & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & \sigma_k }
+    \end{align}
+  where $\Sigma$ is not necessarily square, but all other entries are 0. Then let $V$ be the change of basis matrix from $B_V$ to std, and similarly let $U$ be the change of basis from $B_W$ to std.
+  If $A$ is a matrix representing such a linear transformation in $\F^n \to \F^m$ (for $\F = \R$ or $\C$), we can write
+    \begin{align}
+      A &= U \Sigma V^*
+    \end{align}
+  This is called the \emph{singular value decomposition} of $A$
+\end{definition}
+\begin{remark}
+  Recall that $B_V$ can be determined by the eigenvectors of $A^*A$ so $V$ is the matrix whose columns are the vectors in $B_V$,
+  and $B_W$ is the extension of $A(B_V)$ to an orthonormal basis of $W$, so similarly $U$ is the matrix whose columns are the vectors in $B_W$.
+\end{remark}
+
+\begin{defexample}\label{longsvd}
+  We will determine the \emph{singular value decomposition} of $A$ where
+    \begin{align}
+      A &= \bmatr{
+        \frac{19}3 & \frac{-14}3 & \frac{-10}3 \\
+        \frac{-8}3 & \frac{-2}3 & \frac{-20}3 }
+    \end{align}
+  We begin by determining $A^*A$
+    \begin{align}
+      A^*A &= \bmatr{
+        \frac{19}3 & \frac{-8}3 \\
+        \frac{-14}3 & \frac{-2}3 \\
+        \frac{-10}3 & \frac{-20}3
+      }\bmatr{
+        \frac{19}3 & \frac{-14}3 & \frac{-10}3 \\
+        \frac{-8}3 & \frac{-2}3 & \frac{-20}3
+      } \\
+      &= \bmatr{
+        \frac{425}{9} & \frac{-250}{9} & \frac{-350}{9} \\
+        \frac{-250}{9} & \frac{200}{9} & \frac{100}{9} \\
+        \frac{-230}{9} & \frac{100}{9} & \frac{500}{9}
+      } \\
+      &= \frac{25}{9} \bmatr{
+        17 & -10 & -14 \\
+        -10 & 8 & 4 \\
+        -14 & 4 & 20
+      }
+    \end{align}
+  We then determine the eigenvalues by the characteristic polynomial (details omitted)
+    \begin{align}
+      \det\paren{A^*A-\lambda I} &= -\lambda^3 + 45\lambda^2 - 324\lambda \\
+        &= -\lambda(\lambda^2-45\lambda+324) \\
+        &= -\lambda(\lambda-4)(\lambda-36)
+    \end{align}
+  Thus the eigenvalues of $A^*A$ are $0$, $25$, and $100$, giving us singular values
+    \begin{align}
+      \sigma_1 &= \sqrt{100} = 10 &
+      \sigma_2 &= \sqrt{25} = 5
+    \end{align}
+  Solving $(A^*A-\lambda I)\vec v = \vec 0$ by echelon row reduction (omitted) gives us
+    \begin{align}
+      100\text{-eigenvalue of } & \pmatr{ -2 \\ 1 \\ 2 } &
+      25\text{-eigenvalue of } & \pmatr{ 1 \\ -2 \\ 2 } &
+      0\text{-eigenvalue of } & \pmatr{ 2 \\ 2 \\ 1 }
+    \end{align}
+  so normalizing yields an orthonormal basis
+    \begin{align}
+      B_V &= \setof{
+        \pmatr{ \frac{-2}3 \\ \frac{1}3 \\ \frac{2}3 },
+        \pmatr{ \frac{1}3 \\ \frac{-2}3 \\ \frac{2}3 },
+        \pmatr{ \frac{2}3 \\ \frac{2}3 \\ \frac{1}3 }
+      } & V &= \bmatr{
+        \frac{-2}3 & \frac{1}3 & \frac{2}3 \\
+        \frac{1}3 & \frac{-2}3 & \frac{2}3 \\
+        \frac{2}3 & \frac{2}3 & \frac{1}3 \\
+      }
+    \end{align}
+  We compute $B_W$ by taking $\frac{1}{\sigma_i}A\vec v_i$ for our non-zero eigenvectors (omitted) giving
+    \begin{align}
+      B_W &= \setof{
+        \pmatr{ \frac{-4}5 \\ \frac{3}5 },
+        \pmatr{ \frac{3}5 \\ \frac{4}5 }
+      } & U &= \bmatr{
+        \frac{-4}3 & \frac{3}3 \\
+        \frac{3}3 & \frac{4}3
+      }
+    \end{align}
+    \begin{align}
+      A = U\Sigma V^* &= \bmatr{
+        \frac{-4}3 & \frac{3}3 \\
+        \frac{3}3 & \frac{4}3
+      }\bmatr{
+        10 & 0 & 0 \\
+        0 & 5 & 0
+      }\bmatr{
+        \frac{-2}3 & \frac{1}3 & \frac{2}3 \\
+        \frac{1}3 & \frac{-2}3 & \frac{2}3 \\
+        \frac{2}3 & \frac{2}3 & \frac{1}3 \\
+      }
+    \end{align}
+\end{defexample}
+
+\begin{defexample}[Singular values are not the same as eigenvalues]
+  Consider the non-diagonalizable matrix $A$ given by
+    \begin{align}
+      A &= \bmatr{ 1 & 1 \\ 0 & 1 }
+    \end{align}
+  Then $1$ is the only eigenvalue of $A$, however the singular values are $\sqrt{\dfrac{3\pm\sqrt5}{2}}$ giving
+    \begin{align}
+      A &= U\bmatr{
+        \sqrt{\dfrac{3+\sqrt5}{2}} & 0 \\
+        0 & \sqrt{\dfrac{3-\sqrt5}{2}}
+      }V^*
+    \end{align}
+  for some unitary $U$ and $V$. Thus if $\norm{\vec v} = 1$ we have $\norm{A\vec v} \le \sqrt{\dfrac{3+\sqrt5}{2}}$ giving us a bound
+    \begin{align}
+      \frac{\norm{A\vec v}}{\norm{\vec v}} &\le \sqrt{\dfrac{3+\sqrt5}{2}}
+    \end{align}
+\end{defexample}
+
+\section{Pseudo-Inverses}
+
+\begin{definition}[Pseudo-Inverse of a Linear Transformation]
+  Let $T : V \to W$ be any (not necessarily invertible) linear transformation where $V$ and $W$ are finite dimensional.
+  Then we say $T^\dagger : W \to V$ is the pseudo-inverse of $T$ given by the linear transformation
+    \begin{align}
+      T^\dagger \vec v = \begin{cases}
+        \vec 0 & \vec v \in \paren{\im T}^\perp \\
+        \paren{T\big\rvert_{\paren{\ker T}^\perp}}^{-1}\vec v & \vec v \in \im T
+      \end{cases}
+    \end{align}
+\end{definition}
+
+\begin{defexample}[Regular Inverse]
+  If $T$ is invertible then $\im T = W$ and $\ker T = (0)$ so $T^\dagger = T^{-1}$
+\end{defexample}
+
+\begin{defexample}[Pseudo-Inverse of 0]
+  If $T = 0$ then $\im T = (0)$ so $T^\dagger = 0$
+\end{defexample}
+
+\begin{remark}[Pseudo-Inverse by Singular Value Decomposition]
+  Let $A$ be a matrix and $A = U\Sigma V^*$ be the \emph{singular value decomposition} of $A$, then
+    \begin{align}
+      A^\dagger &= V\Sigma^\dagger U^*
+    \end{align}
+  where $\Sigma^\dagger$ is the transpose of $\Sigma$ with all non-zero entries replaced with their reciprocals.
+\end{remark}
+
+\begin{defexample}
+  Let $A$ be as defined in \ref{longsvd}. Then
+    \begin{align}
+      A^\dagger &= \bmatr{
+        \frac{-2}3 & \frac{1}3 & \frac{2}3 \\
+        \frac{1}3 & \frac{-2}3 & \frac{2}3 \\
+        \frac{2}3 & \frac{2}3 & \frac{1}3 \\
+      } \bmatr{
+        \frac{1}{10} & 0 \\
+        0 & \frac{1}{5} \\
+        0 & 0
+      } \bmatr{
+        \frac{-4}3 & \frac{3}3 \\
+        \frac{3}3 & \frac{4}3
+      }\
+    \end{align}
+  Also note that $AA^\dagger = I$ but $A^\dagger A \ne I$.
+\end{defexample}
