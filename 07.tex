@@ -1,0 +1,203 @@
+\chapter{October 27 - November 1}
+
+\section{Pseudo-Inverse (continued)}
+
+\begin{theorem}
+  Let $T : V \to W$ be a linear transformation. Then $T^\dagger T$ is the orthogonal projection onto $(\ker T)^\perp$ and
+  $T T^\dagger$ is the orthogonal projection onto $\im T$.
+\end{theorem}
+\begin{proof}
+  If $\vec v \in (\ker T)^\perp$ then $T^\dagger T\vec v = \vec v$ by definition of $T^\dagger$,
+  and if $\vec v \in \paren{(\ker T)^\perp}^\perp = \ker T$, then $T^\dagger T \vec v = \vec 0$.
+
+  If $\vec v \in \im T$, then $T^\dagger v$ is the $\vec x \in (\ker T)^\perp$ with $T\vec x = \vec v$ so $TT^\dagger\vec v = T\vec x = \vec v$.
+  If $\vec v \in (\im T)^\perp$, then $\vec v \in \ker T^\dagger$ so $TT^\dagger \vec v = \vec 0$.
+\end{proof}
+
+\begin{remark}[Author's Remark]
+  Recall from Homework 5 that if $V$ and $W$ are finite-dimensional inner product spaces and $T_1 : V \to W$
+  and $T_2 : W \to V$ are linear transformations, then if $T_1T_2T_1 = T_1$ and $T_2T_1T_2 = T_2$
+  with $T_1T_2$ and $T_2T_1$ self-adjoint, then $T_2 = T_1^\dagger$.
+\end{remark}
+
+\begin{theorem}
+  Let $A$ be a $n \times m$ matrix and $b \in \R^n$, then $\vec z = A^\dagger \vec b$ is the best solution
+  to $A\vec x = \vec b$ in the following senses:
+  \begin{enumerate}[(a)]
+    \item If $A\vec x = \vec b$ has a solution, then $\vec z$ is the solution with the smallest length:
+      \begin{align}
+        A\vec y = \vec b &\implies \norm{\vec y} \ge \norm{\vec z} \text{ with equality if and only if } \vec y = \vec z
+      \end{align}
+    \item If $A\vec x = \vec b$ has no solution, then for all vectors $\vec y$,
+      \begin{align}
+        \norm{A\vec y - \vec b} \ge \norm{A \vec z - \vec b} \text{ with equality if and only if } A\vec y = A\vec z
+      \end{align}
+      Moreover, by part (a), $A\vec y = A\vec z \implies \norm{\vec y} \ge \norm{\vec z}$ with equality if and only if $\vec y = \vec z$
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  \begin{enumerate}[(a)]
+    \item $A\vec z = AA^\dagger \vec b = \vec b$ since $\vec b \in \im A$ by assumption and $AA^\dagger$ is the orthogonal projection onto $\im A$.
+      If $A\vec y = \vec b$ as well, then $A^\dagger A\vec y = A^\dagger\vec b = \vec z$,
+      so $\vec z$ is the orthogonal projection of $\vec y$ onto $(\ker T)^\perp$.
+      So $\norm{\vec y} \ge \norm{\vec z}$ with equality if and only if $\vec y = \vec z$.
+
+    \item $A\vec z = AA^\dagger \vec b$ is the orthogonal projection of $\vec b$ onto $\im A$,
+      so $A\vec z$ is the closest vector to $\vec b$ that lies in $\im A$.
+  \end{enumerate}
+\end{proof}
+
+\section{Bilinear Forms}
+
+\begin{definition}[Bilinear Form]
+  Let $V$ be a vector space over a field $F$, then a \emph{bilinear form} on $V$ is a function
+  $B : V \times V \to F$ satisfying:
+
+  \begin{enumerate}[(a)]
+    \item $B(A\vec x + b\vec y, \vec z) = aB(\vec x, \vec z) + bB(\vec y, \vec z)$
+    \item $B(\vec x, a\vec y + b\vec z) = aB(\vec x, \vec y) + bB(\vec x, \vec z)$
+  \end{enumerate}
+\end{definition}
+
+\begin{defexample}
+  The standard dot product in $\R^n$ is a \emph{bilinear form}
+\end{defexample}
+
+\begin{defexample}
+  Let $V = \R^2$, $B((a,b),(c,d)) = ac \pm bd$ are \emph{bilinear forms}
+\end{defexample}
+
+\begin{defexample}
+  Let $V = \R^n$ and let $A \in M_n(\R)$.
+  Define $B(\vec v, \vec w) = \transpose{\vec v}A\vec w$.
+  This is a bilinear form by linearity of matrix multiplication.
+\end{defexample}
+
+\begin{theorem}
+  Let $V$ be a finite dimensional vector space over $F$ and let $B$ be a bilinear form on $V$.
+  Then for any basis $S$ for $V$ there is a $n \times n$ matrix $A \in M_n(F)$, where $n = \dim V$, such that
+    \begin{align}
+      B(\vec v, \vec w) &= \transpose{[\vec v]_S} A [\vec w]_S
+    \end{align}
+\end{theorem}
+\begin{proof}
+  Choose any basis $S$ for $V$ and write $S = \setof{\vec v_1,\ldots,\vec v_n}$. Then define
+    \begin{align}
+      a_{ij} &= B(\vec v_i, \vec v_j) & A &= (a_{ij})
+    \end{align}
+  Then for any $\vec v, \vec w \in S$, consider their coefficients with respect to $S$
+    \begin{align}
+      \vec v &= \alpha_1 \vec v_1 + \cdots + \alpha_n \vec v_n &
+      \vec w &= \beta_1 \vec v_1 + \cdots + \beta_n \vec v_n
+    \end{align}
+  This gives us
+    \begin{align}
+      \transpose{[\vec v]_S} A [\vec w]_S
+        &= \pmatr{ \alpha_1 & \cdots & \alpha_n } A \pmatr { \beta_1 \\ \vdots \\ \beta_n } \\
+        &= \pmatr{ \sum_{i=1}^n\alpha_i a_{i1} & \cdots & \sum_{i=1}^n\alpha_n a_{in} } \pmatr{ \beta_1 \\ \vdots \\ \beta_n } \\
+        &= \sum_{j=1}^n\sum_{i=1}^n \alpha_i\beta_j a_{ij} \\
+        &= \sum_{j=1}^n\sum_{i=1}^n \alpha_i\beta_j B(\vec v_i, \vec v_j) \\
+        &= B\paren{\sum_{i=1}^n\alpha_i\vec v_i\;,\;\sum_{i=1}^n\beta_j\vec v_j} \\
+        &= B(\vec v, \vec w)
+    \end{align}
+\end{proof}
+
+\section{Congruence}
+Suppose for bases $S$ and $S'$ of $V$ that
+  \begin{align}
+    B(\vec v, \vec w) &= \transpose{[\vec v]_S} A [\vec w]_S = \transpose{[\vec v]_{S'}} A' [\vec w]_{S'}
+  \end{align}
+Let $P_{S\to S'}$ be the change of basis matrix from $S$ to $S'$, then
+  \begin{align}
+    \transpose{[\vec v]_{S'}} A' [\vec w]_{S'}
+      &= \transpose{\paren{P_{S\to S'}[\vec v]_S}} A' \paren{P_{S\to S'}[\vec w]_S} \\
+      &= \transpose{[\vec v]_S} \transpose{P_{S\to S'}} A' P_{S\to S'}[\vec w]_S
+  \end{align}
+So $A = \transpose{P_{S\to S'}} A' P_{S\to S'}$.
+
+\begin{definition}
+  We say that matrices $A$ and $B$ are \emph{congruent} if $A = \transpose P B P$ for some invertible $P$.
+\end{definition}
+
+\begin{remark}
+  If two matrices represent the same bilinear form in different coordinates, then they are \emph{congruent}.
+  
+  Conversely, if $A, A' \in M_n(F)$ are \emph{congruent}, then there is a basis $S$ for $F^n$ such that
+  \begin{align}
+    \transpose{\vec v}A\vec w &= \transpose{[\vec v]_S} A' [\vec w]_S & \text{ for all } &\vec v, \vec w \in V
+  \end{align}
+\end{remark}
+
+\begin{definition}
+  A bilinear form is \emph{diagonalizable} if there is some basis $S$ such that the corresponding matrix is diagonal.
+\end{definition}
+
+\begin{definition}
+  A bilinear form $B$ is \emph{symmetric} if
+  \begin{align}
+    B(\vec v, \vec w) &= B(\vec w, \vec v) & \text{ for all } &\vec v, \vec w \in V
+  \end{align}
+  Note that $B$ is symmetric if and only if its corresponding matrix is symmetric in any basis.
+\end{definition}
+
+\begin{remark}
+  For the following proofs, we assume that we are working in a vector space over a field $F$ with characteristic at least 2.
+  That is, $2 \ne 0$.
+\end{remark}
+
+\begin{theorem}
+  Let $B$ be a bilinear form on a vector space $V$. Then $B$ is \emph{diagonalizable} if and only if $B$ is \emph{symmetric}.
+\end{theorem}
+\begin{proof}
+  If $B$ is diagonalizable then for some basis the corresponding matrix is symmetric so $B$ is symmetric.
+  Suppose that $B$ is symmetric, then we will show that $B$ is also diagonalizable.
+  We proceed by induction on $\dim V$.
+
+  Suppose that $\dim V = 1$, then $B$ is diagonalizable since any $1 \times 1$ matrix is diagonalizable.
+
+  Suppose the claim holds for any vector space $V'$ with $\dim V' < \dim V$.
+  If $B = 0$ then $B$ is diagonalizable. Otherwise, there must exist some $\vec x, \vec y \in V$ with $B(\vec x, \vec y) \ne 0$.
+
+  If $B(\vec x, \vec x) = B(\vec y, \vec y) = 0$ then we have
+    \begin{align}
+      B(\vec x + \vec y, \vec x + \vec y)
+        &= B(\vec x, \vec x) + 2B(\vec x, \vec y) + B(\vec y, \vec y) = 2B(\vec x, \vec y) \ne 0
+    \end{align}
+  So there must exist some vector $\vec v \in V$ with $B(\vec v, \vec v) \ne 0$.
+
+  Define $L : V \to F$ by $L(\vec y) = B(\vec v, \vec y)$. This is a linear transformation of rank 1 since $L(\vec v) \ne 0$.
+  Thus $\ker L$ has dimension $\dim V - 1$.
+
+  So then there is a basis $S$ for $\ker L$ such that the matrix of $B$ with respect to $S$ is diagonal.
+  Let $S' = S \cup \setof{ \vec v }$. Then for all $\vec a \in S$ we have $B(\vec v, \vec a) = B(\vec a, \vec v) = L(\vec a) = 0$.
+  Thus $S'$ makes $B$ diagonal.
+\end{proof}
+\begin{remark}
+  There is a 1-1 correspondence between quadratic forms and symmetric bilinear forms.
+
+  If $B$ is a symmetric bilinear form we can define a corresponding quadratic form
+    \begin{align}
+      Q(\vec x) &= B(\vec x, \vec x)
+    \end{align}
+  And if $Q$ is a quadratic form we can define the corresponding $B$ by
+    \begin{align}
+      B(\vec x, \vec y) &= \frac12\paren{Q(\vec x + \vec y) - Q(\vec x) - Q(\vec y)}
+    \end{align}
+  It is clear that this map is symmetric, but we can show that it is bilinear by doing some algebra which I'm not typesetting because it's tedious and it's late. The key idea is that
+    \begin{align}
+      Q(\vec y) &= \sum_{1 \le i,j \le n} a_{ij} y_iy_j & \text{ where } a_{ij}&=a_{ji}
+    \end{align}
+  Expanding $B(a\vec x + b\vec y, \vec z)$ using this definition of $Q$ will give the desired bilinearity.
+\end{remark}
+\begin{remark}
+  The symmetric bilinear form for a quadratic form $Q(x) = \sum\limits_{i \le j} a_{ij} x_ix_j$ is given by:
+    \begin{align}B(\vec x, \vec y) &= \transpose{\vec x} \bmatr{
+      a_{11} & \frac12a_{12} & \cdots & \frac12a_{1n} \\
+      \frac12 a_{21} & a_{22} & \cdots & \frac{12}a_{2n} \\
+      \vdots & \vdots & \ddots & \vdots \\
+      \frac12 a_{n1} & \frac12 a_{n2} & \cdots & a_{nn}
+    }\vec y\end{align}
+\end{remark}
+\begin{remark}
+  A diagonal quadratic form is one where the corresponding matrix is diagonal, or equivalently, where all cross-terms in the polynomial are 0
+\end{remark}
