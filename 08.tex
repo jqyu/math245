@@ -1,0 +1,175 @@
+\chapter{November 3 - November 8}
+
+\section{Sylvester's Law of Inertia}
+
+\begin{remark}
+  Given a symmetric bilinear form $B$, let $S = \setof{\vec v_1,\ldots,\vec v_n}$ be a basis that makes $B$ diagonal, then we have
+  \begin{align}
+    B(a_1\vec v_1 + \cdots + a_n\vec v_n, b_1\vec v_1 + \cdots + b_n\vec v_n)
+      &= a_1b_1B(\vec v_1,\vec v_1) + \cdots + a_nb_nB(\vec v_n, \vec v_n)
+  \end{align}
+  If $B$ is a bilinear form over $\C$, then we can replace each $\vec v_i$ with $\frac{1}{c_i}\vec v_i$ where $c_i^2 = B(\vec v_i, \vec v_i)$
+    for all $\vec v_i$ where $c_i \ne 0$. Then the matrix of $B$ with our new basis is of the form
+  \begin{align}
+    \bmatr{
+      1 & \cdots & 0 & 0 & \cdots & 0 \\
+      \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+      0 & \cdots & 1 & 0 & \cdots & 0 \\
+      0 & \cdots & 0 & 0 & \cdots & 0 \\
+      \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+      0 & \cdots & 0 & 0 & \cdots & 0
+    }
+  \end{align}
+  That is, the matrix is diagonal where the only non-zero entries are 1s.
+\end{remark}
+
+\begin{remark}
+  Over $\R$ we can do something similar choosing $c_i^2 = \abs{B(\vec v_i, \vec v_i)}$ which would give us a diagonal matrix
+  where the only non-zero entries are 1s or -1s.
+\end{remark}
+
+\begin{theorem}[Sylvester's Law of Inertia]
+  Let $B$ be ea symmetric bilinear form over a real finite dimensional vector space $V$.
+  Then every diagonal matrix representing $B$ has the same number of positive entries.
+\end{theorem}
+
+\begin{proof}
+  For any two bases that diagonalize $B$, reorder them as $\setof{\vec v_1,\ldots, \vec v_n}$ and $\setof{\vec w_1,\ldots,\vec w_n}$ so that
+  \begin{align}
+    B(\vec v_i,\vec v_i) &\begin{cases}
+      > 0 & 1 \le i \le p \\
+      < 0 & p_1 \le i \le r \\
+      = 0 & r+1 \le i \le n
+    \end{cases} &
+    B(\vec w_i,\vec w_i) &\begin{cases}
+      > 0 & 1 \le i \le q \\
+      < 0 & q_1 \le i \le r \\
+      = 0 & r+1 \le i \le n
+    \end{cases}
+  \end{align}
+  That is, we place the vectors that give positive entries in matrix first, followed by the negative entries, followed by the zeros.
+  Assume without loss of generality that $p \le q$. Then define $\phi : V \to \R^{p-q+r}$ by
+  \begin{align}
+    \phi(\vec x) &= (B(\vec x, \vec v_1),\ldots,B(\vec x, \vec v_p),B(\vec x, \vec w_{q+1}),\ldots,B(\vec x, \vec w_r))
+  \end{align}
+  Then Rank-Nullity Theorem tells us that
+  \begin{align}
+    \rank \phi &\le p-q + r & \nul \phi &\ge n-(p-q+r) \ge n-r
+  \end{align}
+  Suppose that $\vec v \in \ker \phi$, then
+  \begin{align}
+    B(\vec v, \vec v_i) &= 0 \text{ for } 1 \le i \le p &
+    B(\vec v, \vec w_j) &= 0 \text{ for } q+1 \le j \le r
+  \end{align}
+  Writing $\vec v = a_1\vec v_1 + \cdots + a_n\vec v_n = b_1\vec w_1 + \cdots + b_n \vec w_n$ we see that
+  \begin{align}
+    0 = B(\vec v, \vec v_i) &= a_i \text{ for } 1 \le i \le p &
+    0 = B(\vec v, \vec w_j) &= b_j \text{ for } q+1 \le j \le r
+  \end{align}
+  So taking $B(\vec v, \vec v)$ tells us that
+  \begin{align}
+    B(\vec v, \vec v) &= \sum_{i=1}^n a_i^2B(\vec v_i, \vec v_i) \le 0 &
+    B(\vec v, \vec v) &= \sum_{j=1}^n b_j^2B(\vec w_j, \vec w_j) \ge 0
+  \end{align}
+  So $\vec v \in \spanof{\vec v_{r+1},\ldots,\vec v_n}$. Thus $\ker \phi \subseteq \spanof{\vec v_{r+1},\ldots,\vec v_n}$
+  so $\null \phi \le n-r$ which, by our earlier observation, means that $\null \phi = n-r$ so $\rank \phi = r$ so $p=q$.
+\end{proof}
+
+\begin{remark}
+  This means that for any real symmetric bilinear form, when representing as a diagonal matrix whose non-zero entries are $\pm 1$,
+  the number of 1s and -1s is independent of our choice of basis.
+\end{remark}
+
+\begin{definition}[Index]
+  We call the number of 1s the \emph{index}
+\end{definition}
+
+\begin{definition}[Signature]
+  We call difference between the number of 1s and -1s the \emph{signature}.
+  Note that this is sometimes given as a pair. That is, we would say that the following matrix
+  \begin{align}
+    \pmatr{
+      1 & 0 & 0 & 0 \\
+      0 & -1 & 0 & 0 \\
+      0 & 0 & -1 & 0 \\
+      0 & 0 & 0 & 0
+    }
+  \end{align}
+  has \emph{signature} (1, 2) or has \emph{signature} -1.
+\end{definition}
+
+\begin{definition}[Rank]
+  We call the number of non-zero entries the \emph{rank}.
+  This is equivalent to the \emph{rank} of the associated matrix since the rank of a matrix is invariant under congruence.
+  Indeed, multiplying a matrix by an invertible matrix does not change its rank.
+\end{definition}
+
+\section{Cayley-Hamilton Theorem}
+
+\begin{theorem}[Cayley-Hamilton Theorem]
+  Let $T : V \to V$ be a linear transformation over a finite dimensional vector space,
+  and let $f(\lambda)$ be the characteristic polynomial. Then
+    \begin{align}
+      f(T) &= {\bf 0}
+    \end{align}
+\end{theorem}
+\begin{proof}
+  We will show that for any $\vec v \in V$ that $\left[f(T)\right](\vec v) = \vec 0$.
+  For $\vec v = \vec 0$ this holds trivially, so suppose $\vec v \ne \vec 0$. Then define
+  \begin{align}
+    W &= \spanof{\vec v, T\vec v, T^2\vec v, \ldots }
+  \end{align}
+  Let $j$ be the smallest integer for which $\setof{\vec v,\ldots,T^j\vec v}$ is linearly dependent.
+  Then by choice of $j$, $\setof{\vec v,\ldots,T^{j-1}\vec v}$ is linearly independent.
+  We claim that it is also spanning. Indeed,
+  \begin{align}
+    T^j\vec v &\in \spanof{\vec v,\ldots,T^{j-1}\vec v}
+  \end{align}
+  and inductively, if $T^k \vec v \in \spanof{\vec v, \ldots, T^{j-1},\vec v}$ for all $k$ then
+  \begin{align}
+    T^{k+1}\vec v = T\paren{T^k\vec v}
+      &= T\paren{a_1\vec v + \cdots + a_jT^{j-1}\vec v} \\
+      &= a_1T\vec v + \cdots + a_{j-1}T^{j}\vec v \\
+      &\in \spanof{\vec v,\ldots,T^{j-1}\vec v}
+  \end{align}
+  Thus $T\big\rvert_{W} : W \to W$ is well defined, and for basis $B = \setof{\vec v_1,\ldots,T^{j-1}\vec v}$ of $W$ we have
+  \begin{align}
+    \left[T\big\rvert_{W}\right]_B &= \bmatr{
+      0 & 0 & \cdots & 0 & -a_0 \\
+      1 & 0 & \cdots & 0 & -a_1 \\
+      0 & 1 & \cdots & 0 & -a_2 \\
+      \vdots & \vdots & \ddots & \vdots & \vdots \\
+      0 & 0 & \cdots & 1 & -a_{j-1} \\
+    }
+  \end{align}
+  whose determinant is
+  \begin{align}
+    g(\lambda) &= (-1)^j(\lambda^j + a_{j-1}\lambda^{j-1} + \cdots + a_0)
+  \end{align}
+  Extending our basis $B$ to a basis $B'$ for all of $V$, the matrix of $T$ becomes
+  \begin{align}
+    [T]_{B'} &= \bmatr{
+      \left[T\big\rvert_{W}\right]_B & A \\
+      {\bf 0} & B
+    }
+  \end{align}
+  Since the bottom left are all zeros, if $q(\lambda)$ is the characteristic polynomial for $B$,
+  then $f(\lambda) = q(\lambda)g(\lambda)$. That is, $g(\lambda) \vert f(\lambda)$ so
+  \begin{align}
+    \left[f(T)\right](\vec v) &= q(T)g(T)\vec v \\
+      &= (-1)^{j-1}q(T)(T^j + a_{j-1}T^{j-1} + \cdots + a_0)\vec v \\
+      &= (-1)^{j-1}q(T)(T^j - T^j)\vec v \\
+      &= (-1)^{j-1}q(T)\vec 0 = \vec 0
+  \end{align}
+\end{proof}
+\begin{corollary}[Nilpotency of Matrices Eigenvalues 0]
+  If $T : V \to V$ is a linear transformation over $\C$ whose only eigenvalue is zero,
+  then $T^n = {\bf 0}$ where $n = \dim V$.
+\end{corollary}
+\begin{proof}
+  If 0 is the only eigenvalues of $T$ then the characteristic polynomial for $T$ must be $a\lambda^n$
+  for some $a \in \C$, so by Cayley-Hamilton Theorem, $aT^n = {\bf 0} = T^n$.
+\end{proof}
+\begin{definition}[Nilpotency]
+  If $T : V \to V$ is a linear transformation such that $T^n = {\bf 0}$, we say $T$ is \emph{nilpotent}.
+\end{definition}
