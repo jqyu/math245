@@ -162,7 +162,7 @@
       &= (-1)^{j-1}q(T)\vec 0 = \vec 0
   \end{align}
 \end{proof}
-\begin{corollary}[Nilpotency of Matrices Eigenvalues 0]
+\begin{corollary}[Nilpotency of Matrices Eigenvalues 0] \label{eigenvaluezeronilpotent}
   If $T : V \to V$ is a linear transformation over $\C$ whose only eigenvalue is zero,
   then $T^n = {\bf 0}$ where $n = \dim V$.
 \end{corollary}
@@ -173,3 +173,70 @@
 \begin{definition}[Nilpotency]
   If $T : V \to V$ is a linear transformation such that $T^n = {\bf 0}$, we say $T$ is \emph{nilpotent}.
 \end{definition}
+
+\section{Jordan Canonical Form (Nilpotent Transformations)}
+
+Suppose that $T : V \to V$ is a complex linear transformation whose only eigenvalue is 0.
+Then by corollary to the Cayley-Hamilton Theorem \ref{eigenvaluezeronilpotent}, we have that $T^n = {\bf 0}$
+where $n = \dim V$.
+
+\begin{definition}[Chain]
+  We call a set $\setof{T^{j-1}\vec v, T^{j-2}\vec v, \ldots, \vec v}$ such that $T^j\vec v = \vec 0$ a \emph{chain}
+\end{definition}
+\begin{remark}
+  Since $T^n = {\bf 0}$, we can construct a \emph{chain} for any $\vec v \in V$.
+\end{remark}
+\begin{remark}
+  Suppose that $B = \setof{T^{j-1}\vec v, \ldots, \vec v}$ is such a \emph{chain}, as well as a basis for $V$, then
+  \begin{align}
+    [T]_B &= \bmatr{
+      0 & 1 & 0 & \cdots & 0 \\
+      0 & 0 & 1 & \cdots & 0 \\
+      \vdots & \vdots & \vdots & \ddots & \vdots \\
+      0 & 0 & 0 & \cdots & 1 \\
+      0 & 0 & 0 & \cdots & 0
+    }
+  \end{align}
+  This is called a \emph{Jordan Block}
+\end{remark}
+
+\begin{theorem}
+  Let $\setof{\vec v_1,\ldots,\vec v_k}$ be a set of vectors with corresponding \emph{chains} for each $\vec v_i$,
+  $\setof{T^{p_i-1}\vec v_i,\ldots,\vec v_i}$. If $\setof{T^{p_1-1}\vec v_1,\ldots,T^{p_k-1}\vec v_k}$
+  is linearly independent then
+  \begin{align}
+    B &= \bigcup_{i=1}^k\setof{T^{p_i-1}\vec v_i,\ldots,\vec v_i}
+  \end{align}
+  is also linearly independent.
+\end{theorem}
+\begin{proof}
+  We proceed by induction on $\abs{B}$. If $\abs{B} = 1$ the result is trivial.
+
+  Then if $\abs{B} = n$, without loss of generality suppose that $V = \spn B$ by considering the restriction of $T$ onto $\spn B$.
+  Then note that $T^{p_i}\vec v_i = \vec 0$ for all $i$ by definition of a \emph{chain}.
+
+  Let $W = \spn B'$ where $B' = B \setminus \setof{\vec v_1,\ldots,\vec v_k}$. Then $W = \im T$ and is $T$-invariant.
+
+  Thus $T\big\rvert_{W} : W \to W$ is well defined, so $B'$ is linearly independent by the inductive hypothesis, giving us $\dim W = n - k$.
+
+  However $\dim V \le n$ so $\nul T \le k$. But since $\setof{T^{p_1-1}\vec v_1,\ldots,T^{p_k-1}\vec v_k}$ is linearly independent and each $T^{p_i}\vec v_i = \vec 0$,
+  we have that $\nul T = k$, so $\dim V = n$ and thus $B$ is linearly independent.
+\end{proof}
+
+\begin{theorem}
+  If $T^n = 0$ then there is a basis $B$ consisting of a union of \emph{chains}.
+\end{theorem}
+\begin{proof}
+  We proceed by induction on $n$. If $n=1$ then $T = {\bf 0}$ so the claim holds trivially by taking any basis.
+
+  In general, let $W = \im T$. Then $W$ is $T$-invariant and $\dim W < \dim V$.
+  By the inductive hypothesis, $W$ admits a basis of \emph{chains}
+  \begin{align}
+    \setof{T^{p_1-1}\vec w,\ldots,\vec w_1}, \ldots, \setof{T^{p_k-1}\vec w_1,\ldots,\vec w_k}
+  \end{align}
+  So define $B$ as the union of
+  \begin{align}
+    \setof{T^{p_1}\vec v,\ldots,\vec v_1}, \ldots, \setof{T^{p_k}\vec v_1,\ldots,\vec v_k}
+  \end{align}
+  where $T\vec v_k = \vec w_k$. Then $B$ is linearly independent (indeed $\spanof{v_1,\ldots,v_k} \cap \spn B' = \emptyset$ or else we would have a non-zero eigenvalue).
+\end{proof}
