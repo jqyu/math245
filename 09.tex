@@ -1,0 +1,165 @@
+\chapter{November 10 - November 15}
+
+\section{Jordan Canonical Form (Nilpotent Continued)}
+
+\begin{theorem}
+  Suppose $T : V \to V$ is a complex linear transformation with $T^n = 0$.
+  Then there is a basis $B$ consisting of a union of \emph{chains}.
+\end{theorem}
+\begin{proof}
+  We proceed by induction on $n$. If $n=1$ then $T = {\bf 0}$ so the claim holds trivially by taking any basis.
+
+  In general, let $W = \im T$. Then $W$ is $T$-invariant and $\dim W < \dim V$.
+  By the inductive hypothesis, $W$ admits a basis of \emph{chains}
+  \begin{align}
+    \setof{T^{p_1-1}\vec w,\ldots,\vec w_1}, \ldots, \setof{T^{p_k-1}\vec w_1,\ldots,\vec w_k}
+  \end{align}
+  So define $B$ as the union of
+  \begin{align}
+    \setof{T^{p_1}\vec v,\ldots,\vec v_1}, \ldots, \setof{T^{p_k}\vec v_1,\ldots,\vec v_k}
+  \end{align}
+  where $T\vec v_k = \vec w_k$. Then $B$ is linearly independent (indeed $\spanof{v_1,\ldots,v_k} \cap \spn B' = \emptyset$ or else we would have a non-zero eigenvalue).
+
+  Each $T^{p_i+1}\vec v_i \in \ker T$ since $T^{p_i+1}\vec v_i = T^{p_i} \vec w_i = \vec 0$.
+  So extend $\setof{ T^{p_1}\vec v_1, \ldots, T^{p_k}\vec v_k }$ to a basis $\setof{ T^{p_1}\vec v_1, \ldots, T^{p_k}\vec v_k, \vec x_1, \ldots, \vec x_m }$ of $\ker T$.
+  Each $\setof{ \vec x_i }$ is a length one chain and the set
+    \begin{align}
+      \sB &= \bigcup_{i=1}^k\setof{T^{p_i}\vec v_i, \ldots, \vec v_i} \cup \setof{ \vec x_1, \ldots, \vec x_m }
+    \end{align}
+  is linearly independent.
+
+  Let $r = \rank T$ and $t = \nul T$. Then $r + t = n$ and $t = k + m$, so $r + k + m = n$.
+  Since we have added $k + m$ vectors to the original basis of $\im T$ to get $\sB$, $\sB$
+  is a linearly independent set of $n$ vectors and is thus a basis of $V$.
+\end{proof}
+
+Thus if $T : V \to V$ is a nilpotent operator, $T$ has a Jordan Canonical Basis.
+
+\section{Jordan Canonical Form}
+
+Suppose $T : V \to V$ is a complex linear transformation with only one eigenvalue $\lambda$.
+Then $(T-\lambda I)^n = 0$ by Cayley-Hamilton, so there is a Jordan Canonical Basis $\sB$ for $T - \lambda I$
+
+\begin{align}
+  [T-\lambda I]_{\sB} = \bmatr{
+    A_1 & \cdots & 0 \\
+    \vdots & \ddots & \vdots \\
+    0 & \cdots & A_k
+  }
+\end{align}
+
+where each $A_i$ is a Jordan Block. So $[T]_{\sB}$ is the same thing but with $\lambda$s along the diagonal.
+We wish to generalize this to the case of $T$ having more than one eigenvalue.
+
+\begin{definition}[Generalized Eigenvector]
+  Let $\lambda \in \C$ be an eigenvalue of $T : V \to V$. A \emph{generalized $\lambda$-eigenvector} is a vector $\vec v$
+  satisfying $(T-\lambda I)^n \vec v = \vec 0$ for some $r$.
+\end{definition}
+
+\begin{definition}[Generalized Eigenspace]
+  Let $\lambda \in \C$ be an eigenvalue of $T : V \to V$. The \emph{generalized $\lambda$-eigenspace} of $T$ is
+  \begin{align}
+    K_\lambda &= \setof{ \vec v \in V : (T-\lambda I)^k \vec v = \vec 0 \text{ for some } k \ge 1 }
+  \end{align}
+\end{definition}
+
+\begin{remark}
+  $K_\lambda$ is a subspace of $V$ since
+  \begin{align}
+    K_\lambda = \bigcup_{k=1}^\infty \ker (T-\lambda I)^k
+  \end{align}
+  so if $\vec x, \vec y \in K_\lambda$ then there is some $k$ for which $\vec x, \vec y$ are both contained in $\ker (T-\lambda I)^k \subseteq K_\lambda$
+  which we know to be a subspace.
+\end{remark}
+
+\begin{remark}
+  $K_\lambda$ is $T$-invariant, since by commutativity of $T$ with $(T-\lambda I)^k$
+  \begin{align}
+    x \in K_\lambda
+      &\implies (T-\lambda I)^k \vec x = \vec 0 \text{ for some } k \\
+      &\implies (T-\lambda I)^k(T \vec x ) = T(T-\lambda I)^k \vec x = \vec 0
+  \end{align}
+\end{remark}
+
+\begin{remark}
+  $T\big\rvert_{K_\lambda}$ only has eigenvalue $\lambda$.
+  Say $T\vec v = \mu \vec v$ and $\vec v \in K_\lambda$, then $(T-\lambda I)^k \vec v = \vec 0$
+  but $(T-\lambda I)^{k-1}\vec v \ne \vec 0$.
+
+  Then $\vec y = (T-\lambda I)^{k-1}\vec v$ is a $\lambda$-eigenvector, so by commutativity of polynomials of $T$
+  \begin{align}
+    (T-\mu I)(T - \lambda I)^{k-1} \vec v 
+      &= (T-\lambda I)^{k-1}(T-\mu I)\vec v \\
+      &= \vec 0
+  \end{align}
+  So $\vec y$ is a $\mu$-eigenvector, thus $\mu = \lambda$.
+
+  Thus there is a basis $\sB_\lambda$ of $K_\lambda$ that puts $T\big\rvert_{K_\lambda}$ in Jordan Canonical Form.
+\end{remark}
+
+\begin{theorem}[Decomposition into Generalized Eigenspaces]
+  Let $T : V \to V$ be a linear transformation with eigenvalues $\lambda_1,\ldots,\lambda_k$, then
+  \begin{align}
+    V &\simeq K_{\lambda_1} \oplus \cdots \oplus K_{\lambda_k}
+  \end{align}
+\end{theorem}
+\begin{proof}
+  It suffices to show two things:
+  \begin{align}
+    K_{\lambda_i} \cap \spanof{K_{\lambda_j} : j \ne i} &= (0) \text{ for all } i \\
+    V &= \spanof{K_{\lambda_1},\ldots,K_{\lambda_k}}
+  \end{align}
+  \begin{enumerate}[i.]
+    \item $(T-\lambda_iI)\big\rvert_{K_{\lambda_i}}$ is nilpotent since it has only 0 as an eigenvalue, thus
+      $\paren{(T-\lambda_iI)\big\rvert_{K_{\lambda_i}}}^n = 0$.
+    However, $(T-\lambda_i I)\big\rvert_{K_{\lambda_j}} : K_{\lambda_j} \to K_{\lambda_j}$ is an injection
+      since there are no $\lambda_i$-eigenvectors in $K_{\lambda_j}$ for $j \ne i$.
+      Furthermore, this is well defined since $K_{\lambda_j}$ is both $T$ and $\lambda_i I$-invariant.
+
+    Thus $(T-\lambda_i I)^n$ is injective on $\spanof{K_{\lambda_j} : j \ne i}$, but has $K_{\lambda_i} \subseteq \ker (T-\lambda_i I)^n$.
+      Thus $K_{\lambda_i} \cap \spanof{K_{\lambda_j} : j \ne i} = (0)$ as required.
+
+    \item We prove this by induction on $k$. The $k=1$ case has already been shown in the single eigenvalue case. Then let
+      \begin{align}
+        W &= \spanof{K_{\lambda_1},\ldots,K_{\lambda_{k-1}}} \\
+          &= \im(T-\lambda_kI)^a \text{ where } a = \dim K_{\lambda_k}
+      \end{align}
+    Since $(T-\lambda_k I)\big\rvert_W$ is an isomorphism we get $\dim K_{\lambda_i} + \dim W = \dim V$.
+    Then by rank-nullity applied to $(T-\lambda_kI)^a$ we get
+    \begin{align}
+      V &= \spanof{K_{\lambda_k}, W} = \spanof{K_{\lambda_1},\ldots,K_{\lambda_k}}
+    \end{align}
+  \end{enumerate}
+\end{proof}
+\begin{corollary}[Jordan Canonical Basis]
+  If $\sB_i$ is a Jordan Canonical Basis for $K_{\lambda_i}$ then $\sB = \bigcup_{i=1}^k B_i$ is a Jordan Canonical Basis for all of $V$.
+\end{corollary}
+
+\section{Computing the Jordan Canonical Form}
+\begin{theorem}
+  Let $T : V \to V$ be a linear transformation and $\lambda$ and eigenvalue of $T$.
+  The multiplicity of $\lambda$ as a root of the characteristic polynomial equals $\dim K_\lambda$.
+\end{theorem}
+\begin{proof}
+  If $T$ has only one eigenvalue then the characteristic polynomial is $(x-\lambda)^{\dim V}$ and $\dim V = \dim K_\lambda$.
+
+  In general, $(x-\lambda)^{\dim K_\lambda}$ divides the characteristic polynomial (indeed, consider the restriction of $T$ onto $K_\lambda$)
+  and so $\prod_{\lambda}(x-\lambda)^{\dim K_{\lambda}}$ divides the characteristic polynomial.
+
+  But $\prod_{\lambda}(x-\lambda)^{\dim K_{\lambda}}$ has degree $\sum_\lambda \dim K_\lambda = \dim V$ so it must be exactly the characteristic polynomial.
+\end{proof}
+
+\begin{theorem}
+  The number of Jordan blocks associated to $\lambda$ that has size at least $r$ is
+  \begin{align}
+    \nul ((T-\lambda I)^r) - \nul ((T-\lambda I)^{r-1})
+  \end{align}
+\end{theorem}
+\begin{proof}
+  We can assume without loss of generality that $V = K_\lambda$ since $\ker(T-\lambda I)^k \subseteq K_\lambda$ for all $k$.
+  We can also assume without loss of generality that $\lambda = 0$ since $T - \lambda I$ has the same blocks as $T$.
+
+  $T^{r-1}$ will kill the $(r-1)^{\text{st}}$ vector in each chain while $T^r$ kills the $r^{\text{th}}$ vector in each chain.
+
+  The difference is thus the number of chains with length at least $r$.
+\end{proof}

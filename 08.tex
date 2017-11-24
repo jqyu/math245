@@ -222,21 +222,3 @@ where $n = \dim V$.
   However $\dim V \le n$ so $\nul T \le k$. But since $\setof{T^{p_1-1}\vec v_1,\ldots,T^{p_k-1}\vec v_k}$ is linearly independent and each $T^{p_i}\vec v_i = \vec 0$,
   we have that $\nul T = k$, so $\dim V = n$ and thus $B$ is linearly independent.
 \end{proof}
-
-\begin{theorem}
-  If $T^n = 0$ then there is a basis $B$ consisting of a union of \emph{chains}.
-\end{theorem}
-\begin{proof}
-  We proceed by induction on $n$. If $n=1$ then $T = {\bf 0}$ so the claim holds trivially by taking any basis.
-
-  In general, let $W = \im T$. Then $W$ is $T$-invariant and $\dim W < \dim V$.
-  By the inductive hypothesis, $W$ admits a basis of \emph{chains}
-  \begin{align}
-    \setof{T^{p_1-1}\vec w,\ldots,\vec w_1}, \ldots, \setof{T^{p_k-1}\vec w_1,\ldots,\vec w_k}
-  \end{align}
-  So define $B$ as the union of
-  \begin{align}
-    \setof{T^{p_1}\vec v,\ldots,\vec v_1}, \ldots, \setof{T^{p_k}\vec v_1,\ldots,\vec v_k}
-  \end{align}
-  where $T\vec v_k = \vec w_k$. Then $B$ is linearly independent (indeed $\spanof{v_1,\ldots,v_k} \cap \spn B' = \emptyset$ or else we would have a non-zero eigenvalue).
-\end{proof}
